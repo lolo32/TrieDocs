@@ -1,0 +1,6 @@
+[submodule "3party/mupdf-git"]
+	path = 3party/mupdf-git
+	url = git://git.ghostscript.com/mupdf.git
+[submodule "3party/polarssl-git"]
+	path = 3party/polarssl-git
+	url = git://github.com/polarssl/polarssl.git
