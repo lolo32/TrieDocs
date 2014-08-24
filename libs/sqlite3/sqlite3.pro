@@ -13,10 +13,10 @@ CONFIG += staticlib
 INCLUDEPATH += $$PWD/../../3party/sqlite-3.8.6
 
 SOURCES += \
-    libsqlite3.c
+    sqlite3.c
 
 HEADERS += \
-    libsqlite3.h
+    sqlite3.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

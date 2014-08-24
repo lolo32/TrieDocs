@@ -16,6 +16,6 @@
 // Active la planification des requêtes la plus avancé
 #define SQLITE_ENABLE_STAT4
 
-#include "sqlite3.h"
+#include "sqlite/sqlite3.h"
 
 #endif // LIBSQLITE3_H
