@@ -10,6 +10,8 @@ TARGET = mupdf
 TEMPLATE = lib
 CONFIG += staticlib
 
+INCLUDEPATH += $$PWD/../../3party/mupdf-git/include
+
 SOURCES +=
 
 HEADERS +=
