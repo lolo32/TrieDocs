@@ -1,13 +1,15 @@
-<!DOCTYPE RCC>
 <RCC>
     <qresource prefix="/icones">
-        <file alias="html.svg">../icones/HTML_gsagri04.svg</file>
-        <file alias="odb.svg">../icones/ODB_gsagri04.svg</file>
-        <file alias="odt.svg">../icones/ODT_gsagri04.svg</file>
-        <file alias="ods.svg">../icones/ODS_gsagri04_2.svg</file>
-        <file alias="ogg.svg">../icones/OGG_file.svg</file>
-        <file alias="pdf.svg">../icones/PDF_gsagri04.svg</file>
-        <file alias="svg.svg">../icones/SVG_icon.svg</file>
-        <file alias="txt.svg">../icones/TEXT_gsagri04.svg</file>
+        <file alias="html.svg">icones/HTML_gsagri04.svg</file>
+        <file alias="odb.svg">icones/ODB_gsagri04.svg</file>
+        <file alias="odt.svg">icones/ODT_gsagri04.svg</file>
+        <file alias="ods.svg">icones/ODS_gsagri04_2.svg</file>
+        <file alias="ogg.svg">icones/OGG_file.svg</file>
+        <file alias="pdf.svg">icones/PDF_gsagri04.svg</file>
+        <file alias="svg.svg">icones/SVG_icon.svg</file>
+        <file alias="txt.svg">icones/TEXT_gsagri04.svg</file>
+    </qresource>
+    <qresource prefix="/res">
+        <file alias="db.sql">ressources/requetes.sql</file>
     </qresource>
 </RCC>
