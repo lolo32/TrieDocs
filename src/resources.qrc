@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/icones">
+    <qresource prefix="/fichiers">
         <file alias="html.svg">icones/HTML_gsagri04.svg</file>
         <file alias="odb.svg">icones/ODB_gsagri04.svg</file>
         <file alias="odt.svg">icones/ODT_gsagri04.svg</file>
@@ -11,5 +11,9 @@
     </qresource>
     <qresource prefix="/res">
         <file alias="db.sql">ressources/requetes.sql</file>
+    </qresource>
+    <qresource prefix="/icones">
+        <file alias="loupe.svg">icones/ico_loupe_gsagri04.svg</file>
+        <file alias="tag.svg">icones/ico_tag_crisg.svg</file>
     </qresource>
 </RCC>
