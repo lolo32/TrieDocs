@@ -6,17 +6,18 @@
 
 QT       -= core gui
 
-TARGET = miniz
+TARGET = myminiz
 TEMPLATE = lib
 CONFIG += staticlib
 
 INCLUDEPATH += $$PWD/../../3party/miniz-r63
 
 SOURCES += \
-    libminiz.c
+    libmyminiz.c
 
 HEADERS += \
-    libminiz.h
+    libmyminiz.h
+
 unix {
     target.path = /usr/lib
     INSTALLS += target

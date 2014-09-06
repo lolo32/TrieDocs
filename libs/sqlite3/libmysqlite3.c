@@ -1,5 +1,6 @@
-#ifndef LIBSQLITE3_H
-#define LIBSQLITE3_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // Active le moteur FTS4
 #define SQLITE_ENABLE_FTS4
@@ -16,6 +17,10 @@
 // Active la planification des requêtes la plus avancé
 #define SQLITE_ENABLE_STAT4
 
-#include "sqlite/sqlite3.h"
 
-#endif // LIBSQLITE3_H
+// On ajoute le fichier source
+#include "sqlite/sqlite3.c"
+
+#ifdef __cplusplus
+}
+#endif

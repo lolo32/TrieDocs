@@ -6,7 +6,7 @@
 
 QT       -= core gui
 
-TARGET = mupdf
+TARGET = mymupdf
 TEMPLATE = lib
 CONFIG += staticlib
 

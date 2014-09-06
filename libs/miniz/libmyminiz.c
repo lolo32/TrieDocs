@@ -1,6 +1,6 @@
 
 #define MZ_LIBMINIZ
 
-#include "libminiz.h"
+#include "libmyminiz.h"
 
 #include "miniz.c"

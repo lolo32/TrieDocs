@@ -6,17 +6,18 @@
 
 QT       -= core gui
 
-TARGET = sqlite3
+TARGET = mysqlite3
 TEMPLATE = lib
 CONFIG += staticlib
 
 INCLUDEPATH += $$PWD/../../3party/sqlite-3.8.6
 
 SOURCES += \
-    sqlite3.c
+    libmysqlite3.c
 
 HEADERS += \
-    sqlite3.h
+    libmysqlite3.h
+
 unix {
     target.path = /usr/lib
     INSTALLS += target

@@ -1,8 +1,8 @@
-#ifndef LIBMINIZ_H
-#define LIBMINIZ_H
+#ifndef LIBMYMINIZ_H
+#define LIBMYMINIZ_H
 
 /* désactive le support du ZIP */
-#define MINIZ_NO_ARCHIVE_APIS
+//#define MINIZ_NO_ARCHIVE_APIS
 
 #define MINIZ_NO_STDIO
 
@@ -11,6 +11,8 @@
 #define MINIZ_NO_ZLIB_COMPATIBLE_NAME
 
 #ifndef MZ_LIBMINIZ
+
+#if 0
 // -----------------------------
 // Définitions dans miniz.c à appeler depuis l'extérieur
 
@@ -27,6 +29,13 @@ int mz_compress2(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char 
 // Single-call decompression.
 // Returns MZ_OK on success, or one of the error codes from mz_inflate() on failure.
 int mz_uncompress(unsigned char *pDest, mz_ulong *pDest_len, const unsigned char *pSource, mz_ulong source_len);
+#else
+
+#define MINIZ_HEADER_FILE_ONLY
+#include "miniz.c"
+
 #endif
 
-#endif // LIBMINIZ_H
+#endif
+
+#endif // LIBMYMINIZ_H
