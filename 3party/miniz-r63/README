@@ -1,22 +1,67 @@
-miniz.c is a lossless, high performance data compression library in a single source file that implements the zlib (RFC 1950) and Deflate (RFC 1951) compressed data format specification standards. It supports the most commonly used functions exported by the zlib library, but is a completely independent implementation so zlib's licensing requirements do not apply. miniz.c also contains simple to use functions for writing .PNG format image files and reading/writing/appending .ZIP format archives. miniz's compression speed has been tuned to be comparable to zlib's, and it also has a specialized real-time compressor function designed to compare well against fastlz/minilzo.
+miniz
 
-Here's a blog update(http://richg42.blogspot.com/2013/10/minizc-finally-added-zip64-support.html) on miniz bug fixes/enhancements, and the current status of zip64 support. The source to the zip64 variant of miniz was released as part of Valve's vogl codebase: http://richg42.blogspot.com/2014/03/zip64-version-of-miniz-library-released.html
+Single C source file Deflate/Inflate compression library with zlib-compatible 
+API, ZIP archive reading/writing, PNG writing
+
+Source: http://code.google.com/p/miniz/
+
+
+
+miniz.c is a lossless, high performance data compression library in a single 
+source file that implements the zlib (RFC 1950) and Deflate (RFC 1951) 
+compressed data format specification standards. It supports the most commonly 
+used functions exported by the zlib library, but is a completely independent 
+implementation so zlib's licensing requirements do not apply. miniz.c also 
+contains simple to use functions for writing .PNG format image files and 
+reading/writing/appending .ZIP format archives. miniz's compression speed has 
+been tuned to be comparable to zlib's, and it also has a specialized real-time 
+compressor function designed to compare well against fastlz/minilzo.
+
+Here's a blog update (http://richg42.blogspot.com/2013/10/minizc-finally-added-
+zip64-support.html) on miniz bug fixes/enhancements, and the current status of 
+zip64 support. The source to the zip64 variant of miniz was released as part 
+of Valve's vogl codebase: 
+http://richg42.blogspot.com/2014/03/zip64-version-of-miniz-library-released.html
 
 Whenever I get the chance I'll be extracting it and releasing it separately.
 
 Features
 
-* Completely free: Public domain in jurisdictions that recognize copyright laws, with a license patterned after the public domain SQLite project, see unlicense.org.
-* A portable, single source file header file library written in plain C. I've tested with clang v3.3, various versions of gcc, mingw, MSVC 2008/2010, and TCC (Tiny C Compiler) v0.9.26, under both Linux and Windows x86/x64. Earlier versions of miniz where also tested on OSX, and miniz.c has shipped in several iOS games.
-* Easily tuned and trimmed down by configuring macros at the top of the source file.
-* A drop-in replacement for zlib's most used API's (tested in several open source projects that use zlib, such as libpng and libzip).
-* Fills a single threaded performance vs. compression ratio gap between several popular real-time compressors and zlib. For example, at level 1, miniz.c compresses around 5-9% better than minilzo, but is approx. 35% slower. At levels 2-9, miniz.c is designed to compare favorably against zlib's ratio and speed. See the miniz performance comparison page for example timings.
-* Not a block based compressor: miniz.c fully supports stream based processing using a coroutine-style implementation. The zlib-style API functions can be called a single byte at a time if that's all you've got.
-* Easy to use. The low-level compressor (tinfl) and decompressor (tdefl) have simple state structs which can be saved/restored as needed with simple memcpy's. The low-level codec API's don't use the heap in any way.
-* Entire inflater (including optional zlib header parsing and Adler-32 checking) is implemented in a single function as a coroutine, which is separately available in a small (~550 line) source file: tinfl.c
-* A fairly complete (but totally optional) set of .ZIP archive manipulation and extraction API's. The archive functionality is intended to solve common problems encountered in embedded, mobile, or game development situations. (The archive API's are purposely just powerful enough to write an entire archiver given a bit of additional higher-level logic.)
+* Completely free: Public domain in jurisdictions that recognize copyright 
+  laws, with a license patterned after the public domain SQLite project, see 
+  unlicense.org.
+* A portable, single source file header file library written in plain C. I've 
+  tested with clang v3.3, various versions of gcc, mingw, MSVC 2008/2010, and 
+  TCC (Tiny C Compiler) v0.9.26, under both Linux and Windows x86/x64. Earlier 
+  versions of miniz where also tested on OSX, and miniz.c has shipped in 
+  several iOS games.
+* Easily tuned and trimmed down by configuring macros at the top of the source 
+  file.
+* A drop-in replacement for zlib's most used API's (tested in several open 
+  source projects that use zlib, such as libpng and libzip).
+* Fills a single threaded performance vs. compression ratio gap between several 
+  popular real-time compressors and zlib. For example, at level 1, miniz.c 
+  compresses around 5-9% better than minilzo, but is approx. 35% slower. At 
+  levels 2-9, miniz.c is designed to compare favorably against zlib's ratio and 
+  speed. See the miniz performance comparison page for example timings.
+* Not a block based compressor: miniz.c fully supports stream based processing 
+  using a coroutine-style implementation. The zlib-style API functions can be 
+  called a single byte at a time if that's all you've got.
+* Easy to use. The low-level compressor (tinfl) and decompressor (tdefl) have 
+  simple state structs which can be saved/restored as needed with simple 
+  memcpy's. The low-level codec API's don't use the heap in any way.
+* Entire inflater (including optional zlib header parsing and Adler-32 
+  checking) is implemented in a single function as a coroutine, which is 
+  separately available in a small (~550 line) source file: tinfl.c
+* A fairly complete (but totally optional) set of .ZIP archive manipulation and 
+  extraction API's. The archive functionality is intended to solve common 
+  problems encountered in embedded, mobile, or game development situations. 
+  (The archive API's are purposely just powerful enough to write an entire 
+  archiver given a bit of additional higher-level logic.)
 
-I've created a wiki page comparing the speed and compression ratio of miniz.c verses various other open source codecs. miniz.c's compression ratio is very close to zlib's (sometimes better, or sometimes a small amount worse because it tends to output more blocks due to using less memory), and is typically (but not always) faster, even without any platform specific assembly language optimizations.
-
-
-Source: http://code.google.com/p/miniz/
+I've created a wiki page comparing the speed and compression ratio of miniz.c 
+verses various other open source codecs. miniz.c's compression ratio is very 
+close to zlib's (sometimes better, or sometimes a small amount worse because it 
+tends to output more blocks due to using less memory), and is typically (but 
+not always) faster, even without any platform specific assembly language 
+optimizations.
