@@ -4,3 +4,6 @@
 [submodule "3party/polarssl-git"]
 	path = 3party/polarssl-git
 	url = git://github.com/polarssl/polarssl.git
+[submodule "3party/libscrypt-git"]
+	path = 3party/libscrypt-git
+	url = https://github.com/technion/libscrypt.git
