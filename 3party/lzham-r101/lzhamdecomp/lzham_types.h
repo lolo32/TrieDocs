@@ -21,22 +21,70 @@ namespace lzham
       typedef signed __int64        int64;
    #endif
 
+#ifdef UINT8_MIN
+#undef UINT8_MIN
+#endif
    const uint8  UINT8_MIN  = 0;
+#ifdef UINT8_MAX
+#undef UINT8_MAX
+#endif
    const uint8  UINT8_MAX  = 0xFFU;
+#ifdef UINT16_MIN
+#undef UINT16_MIN
+#endif
    const uint16 UINT16_MIN = 0;
+#ifdef UINT16_MAX
+#undef UINT16_MAX
+#endif
    const uint16 UINT16_MAX = 0xFFFFU;
+#ifdef UINT32_MIN
+#undef UINT32_MIN
+#endif
    const uint32 UINT32_MIN = 0;
+#ifdef UINT32_MAX
+#undef UINT32_MAX
+#endif
    const uint32 UINT32_MAX = 0xFFFFFFFFU;
+#ifdef UINT64_MIN
+#undef UINT64_MIN
+#endif
    const uint64 UINT64_MIN = 0;
+#ifdef UINT64_MAX
+#undef UINT64_MAX
+#endif
    const uint64 UINT64_MAX = 0xFFFFFFFFFFFFFFFFULL;    //0xFFFFFFFFFFFFFFFFui64;
 
+#ifdef INT8_MIN
+#undef INT8_MIN
+#endif
    const int8  INT8_MIN  = -128;
+#ifdef INT8_MAX
+#undef INT8_MAX
+#endif
    const int8  INT8_MAX  = 127;
+#ifdef INT16_MIN
+#undef INT16_MIN
+#endif
    const int16 INT16_MIN = -32768;
+#ifdef INT16_MAX
+#undef INT16_MAX
+#endif
    const int16 INT16_MAX = 32767;
+#ifdef INT32_MIN
+#undef INT32_MIN
+#endif
    const int32 INT32_MIN = (-2147483647 - 1);
+#ifdef INT32_MAX
+#undef INT32_MAX
+#endif
    const int32 INT32_MAX = 2147483647;
+#ifdef INT64_MIN
+#undef INT64_MIN
+#endif
    const int64 INT64_MIN = (int64)0x8000000000000000ULL; //(-9223372036854775807i64 - 1);
+#ifdef INT64_MAX
+#undef INT64_MAX
+#endif
    const int64 INT64_MAX = (int64)0x7FFFFFFFFFFFFFFFULL; //9223372036854775807i64;
 
 #if LZHAM_64BIT_POINTERS
