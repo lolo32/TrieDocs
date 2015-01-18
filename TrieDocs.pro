@@ -1,7 +1,7 @@
 TEMPLATE = subdirs
 
+#    libs/mupdf \
 SUBDIRS += \
-    src \
     libs/miniz \
-    libs/mupdf \
-    libs/sqlite3
+    libs/sqlite3 \
+    src
