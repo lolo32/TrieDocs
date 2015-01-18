@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include "sqlite/sqlite3.h"
+#include "../../3party/sqlite-3.8.6/sqlite/sqlite3.h"
 
 #ifdef __cplusplus
 }
