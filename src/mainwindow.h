@@ -15,6 +15,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_btnRechercher_clicked();
+    void on_action_Quitter_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

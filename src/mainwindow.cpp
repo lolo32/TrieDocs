@@ -12,3 +12,13 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_btnRechercher_clicked()
+{
+    // Clic sur le bouton rechercher
+}
+
+void MainWindow::on_action_Quitter_triggered()
+{
+    QApplication::quit();
+}
