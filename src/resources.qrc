@@ -20,4 +20,7 @@
     <qresource prefix="/res" lang="fr">
         <file alias="db_local.sql">ressources/db_local_fr.sql</file>
     </qresource>
+    <qresource prefix="/i18n">
+        <file>i18n/en.qm</file>
+    </qresource>
 </RCC>
