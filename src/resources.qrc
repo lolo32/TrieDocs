@@ -17,10 +17,20 @@
         <file>ressources/db.sql</file>
         <file>ressources/db_local.sql</file>
     </qresource>
-    <qresource prefix="/res" lang="fr">
+    <qresource lang="fr" prefix="/res">
         <file alias="db_local.sql">ressources/db_local_fr.sql</file>
     </qresource>
     <qresource prefix="/i18n">
         <file>i18n/en.qm</file>
+    </qresource>
+    <qresource prefix="/langs">
+        <file>icones/langs/ca.svg</file>
+        <file>icones/langs/de.svg</file>
+        <file>icones/langs/en.svg</file>
+        <file>icones/langs/es.svg</file>
+        <file>icones/langs/fr.svg</file>
+        <file>icones/langs/gb.svg</file>
+        <file>icones/langs/it.svg</file>
+        <file>icones/langs/us.svg</file>
     </qresource>
 </RCC>
