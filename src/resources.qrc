@@ -14,23 +14,23 @@
         <file alias="tag.svg">icones/ico_tag_crisg.svg</file>
     </qresource>
     <qresource prefix="/res">
-        <file>ressources/db.sql</file>
-        <file>ressources/db_local.sql</file>
+        <file alias="db.sql">ressources/db.sql</file>
+        <file alias="db_local.sql">ressources/db_local.sql</file>
     </qresource>
     <qresource lang="fr" prefix="/res">
         <file alias="db_local.sql">ressources/db_local_fr.sql</file>
     </qresource>
     <qresource prefix="/i18n">
-        <file>i18n/en.qm</file>
+        <file alias="en.qm">i18n/en.qm</file>
     </qresource>
     <qresource prefix="/langs">
-        <file>icones/langs/ca.svg</file>
-        <file>icones/langs/de.svg</file>
-        <file>icones/langs/en.svg</file>
-        <file>icones/langs/es.svg</file>
-        <file>icones/langs/fr.svg</file>
-        <file>icones/langs/gb.svg</file>
-        <file>icones/langs/it.svg</file>
-        <file>icones/langs/us.svg</file>
+        <file alias="ca.svg">icones/langs/ca.svg</file>
+        <file alias="de.svg">icones/langs/de.svg</file>
+        <file alias="en.svg">icones/langs/en.svg</file>
+        <file alias="es.svg">icones/langs/es.svg</file>
+        <file alias="fr.svg">icones/langs/fr.svg</file>
+        <file alias="gb.svg">icones/langs/gb.svg</file>
+        <file alias="it.svg">icones/langs/it.svg</file>
+        <file alias="us.svg">icones/langs/us.svg</file>
     </qresource>
 </RCC>

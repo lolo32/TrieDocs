@@ -16,8 +16,8 @@ public:
     ~DlgClient();
 
 private slots:
-    void on_DlgClient_accepted();
-    void on_DlgClient_rejected();
+    void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
 
 private:
     Ui::DlgClient *ui;
