@@ -12,7 +12,11 @@ class Bdd bdd;
 static void sqlcmd_compress( sqlite3_context *, int, sqlite3_value ** );
 static void sqlcmd_decompress( sqlite3_context *,int, sqlite3_value ** );
 
-// Se connecte à la base de données
+/**
+ * @brief Se connecte à la base de données, gère les mises à niveau de la bdd
+ * @return true en cas d'ouverture avec succès
+ * @return false si une erreur est survenu durant l'ouverture
+ */
 bool Bdd::OuvreBdd()
 {
     bool existe = false;
@@ -101,6 +105,10 @@ bool Bdd::OuvreBdd()
     return ! FermeBdd();
 }
 
+/**
+ * @brief Ferme la base de données
+ * @return true
+ */
 bool Bdd::FermeBdd()
 {
     // ferme la base de données si elle a été ouverte précédement
@@ -112,7 +120,12 @@ bool Bdd::FermeBdd()
     return true;
 }
 
-// Exécute toutes les requetes
+/**
+ * @brief Exécute toutes les requetes
+ * @param sql[in] la ou les requète(s) a exécuter
+ * @return true si les requètes ont bien été exécutées
+ * @return false si une requete n'a pas été exécutée
+ */
 bool Bdd::ExecuteSQL(const char * sql)
 {
     int ret;
@@ -142,16 +155,28 @@ annuler:
     return false;
 }
 
+/**
+ * @brief Exécute un nettoyage de la bdd
+ * @return true si succès, false sinon
+ */
 bool Bdd::Compresser()
 {
     return ExecuteSQL("VACUUM;");
 }
 
+/**
+ * @brief Retourne la description de la dernière erreur SQL
+ * @return la description de la dernière erreur SQL
+ */
 QString Bdd::LastError()
 {
     return QObject::tr( _szLastError.c_str() );
 }
 
+/**
+ * @brief définit la dernière erreur SQL par le code sqlite
+ * @param sqlite3_interr[in] le code numérique de l'erreur
+ */
 void Bdd::SetLastError(int sqlite3_interr)
 {
     if( ! sqlite3_interr )
@@ -194,6 +219,10 @@ void Bdd::SetLastError(int sqlite3_interr)
     SetLastError(zErr);
 }
 
+/**
+ * @brief définit la dernière erreur SQL en spécifiant un message
+ * @param msg[in] la description de l'erreur
+ */
 void Bdd::SetLastError(std::string msg)
 {
     _szLastError = msg;

@@ -1,16 +1,31 @@
+#include "bdd.h"
+#include "dlgclient.h"
 #include "mainwindow.h"
+
 #include <QApplication>
 #include <QString>
 #include <QFile>
 #include <QFileInfo>
 
-#include "bdd.h"
-#include "dlgclient.h"
-
+/**
+ * @brief Fonction d'enrée de l'application
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    {
+        DlgClient dlgClient("hephaistos");
+        int ret = dlgClient.exec();
+
+        if( ret != 1) {
+            // On quitte
+            return ret;
+        }
+    }
     // On regarde si on est dans une situation Client/Server ou non
     //
     // Pour se faire, on ouvre le fichier exécutable et on lit les 4 derniers octets
@@ -40,9 +55,9 @@ int main(int argc, char *argv[])
 
             // On a les infos, on affiche la fenêtre de connexion et d’identification
             DlgClient dlgClient(qszServeur);
-            QDialog::​DialogCode ret = dlgClient.exec();
+            int ret = dlgClient.exec();
 
-            if( ret != QDialog::DialogCode::Accepted) {
+            if( ret != 1) {
                 // On quitte
                 return ret;
             }
