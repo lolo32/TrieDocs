@@ -7,18 +7,38 @@
 
 Traduction traduction;
 
+/**
+ * @brief Permet de mettre une majuscule sur le premier caractère de la chaîne
+ * @param chaine[in] Chaîne dont le premier caractère doit être mit en majuscule
+ * @return La chaîne de caractères, avec la majuscule au début
+ */
 QString MajPremierCaractere( QString chaine )
 {
     chaine[0] = chaine.at(0).toTitleCase();
     return chaine;
 }
 
+/**
+ * @brief Constructeur
+ */
 Traduction::Traduction() :
     p_bCharge(false),
     QObject()
 {
+
 }
 
+/**
+ * @brief Destructeur
+ */
+Traduction::~Traduction()
+{
+
+}
+
+/**
+ * @brief Génère la liste des traductions disponibles dans les ressources
+ */
 void Traduction::initialise()
 {
     QLocale locale;
@@ -59,12 +79,11 @@ void Traduction::initialise()
     p_bCharge = true;
 }
 
-Traduction::~Traduction()
-{
-
-}
-
-void Traduction::rempli(QMenu *menu, QWidget *parent)
+/**
+ * @brief Génère la liste des langues dans un menu
+ * @param menu[in] menu devant contenir la liste des langues
+ */
+void Traduction::rempli(QMenu *menu)
 {
     if( !p_bCharge )
         initialise();
@@ -72,7 +91,7 @@ void Traduction::rempli(QMenu *menu, QWidget *parent)
     QActionGroup *groupeLangue = new QActionGroup(menu);
     groupeLangue->setExclusive(true);
 
-    connect(groupeLangue, SIGNAL(triggered(QAction*)), parent, SLOT(slotLangueChangee(QAction*)));
+    connect(groupeLangue, SIGNAL(triggered(QAction*)), this, SLOT(slotLangueChangee(QAction*)));
 
     for (int i=0; i<p_Langues.size(); ++i) {
         struct langue langue = p_Langues.at(i);
@@ -88,6 +107,10 @@ void Traduction::rempli(QMenu *menu, QWidget *parent)
     }
 }
 
+/**
+ * @brief Génère la liste des langues dans une liste déroulante
+ * @param combo[in] liste déroulante devant contenir la liste des langues
+ */
 void Traduction::rempli(QComboBox *combo)
 {
     if( !p_bCharge )
@@ -105,11 +128,35 @@ void Traduction::rempli(QComboBox *combo)
     }
 }
 
+/**
+ * @brief Fonction déclenchée lorsque on choisit une autre langue dans le menu
+ * @param action[in]
+ */
+void Traduction::slotLangueChangee(QAction *action)
+{
+    if( action != 0 ) {
+        // Charge le nouveau language
+        this->set(action->data().toString());
+    }
+}
+
+/**
+ * @brief Traduction::trieLangues
+ * @param a
+ * @param b
+ * @return a < b
+ */
 bool Traduction::trieLangues(const struct langue &a, const struct langue &b)
 {
     return a.nom < b.nom;
 }
 
+/**
+ * @brief Définit la nouvelle langue par le numéro d'index
+ * @param index[in] index de la nouvelle langue devant être chargée
+ * @return true si on a changé de langue
+ * @return false sinon (erreur ou langue actuelle)
+ */
 bool Traduction::set(int index)
 {
     QString iso = p_Langues[index].iso;
@@ -135,6 +182,12 @@ bool Traduction::set(int index)
         return false;
 }
 
+/**
+ * @brief Définit la nouvelle langue par son code iso
+ * @param iso[in] code iso de la nouvelle langue à charger
+ * @return true si on a changé de langue
+ * @return false sinon (erreur ou langue actuelle)
+ */
 bool Traduction::set(QString iso)
 {
     for( int i=0; i<p_Langues.size(); ++i ) {
