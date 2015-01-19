@@ -17,11 +17,17 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
-    void on_buttonBox_rejected();
+    void on_cbxLangues_currentIndexChanged(int index);
+
+protected:
+    /** this event is called, when a new translator is loaded or the system language is changed
+     */
+    void changeEvent(QEvent*);
 
 private:
     Ui::DlgClient *ui;
-    QString p_qszServeur;   /**< Adresse (IP ou DNS) du serveur distant */
+    QString        p_qszServeur;   /**< Adresse (IP ou DNS) du serveur distant */
+    bool           p_initialise;
 };
 
 #endif // DLGCLIENT_H
