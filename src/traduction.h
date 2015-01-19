@@ -20,10 +20,13 @@ public:
         QString iso;
     };
 
-    void rempli(QMenu *menu, QWidget *parent);
+    void rempli(QMenu *menu);
     void rempli(QComboBox *combo);
     bool set(int index);
     bool set(QString iso);
+
+protected slots:
+    void slotLangueChangee(QAction *action);
 
 protected:
 
