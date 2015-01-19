@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,12 +20,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
         bdd.cpp \
         dlgclient.cpp \
-        reseau.cpp
+        reseau.cpp \
+        traduction.cpp
 
 HEADERS  += mainwindow.h \
         bdd.h \
         dlgclient.h \
-        reseau.h
+        reseau.h \
+        traduction.h
 
 FORMS    += \
         mainwindow.ui \
@@ -33,6 +35,7 @@ FORMS    += \
 
 TRANSLATIONS += \
         i18n/en.ts
+CODECFORTR      = UTF-8
 
 QMAKE_RESOURCE_FLAGS += -threshold 0 -compress 9
 RESOURCES += \
