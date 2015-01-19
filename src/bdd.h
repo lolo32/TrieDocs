@@ -27,9 +27,9 @@ protected:
     void SetLastError(std::string msg);
     void SetLastError(int sqlite3_interr);
 
-    const std::string _szBdNomFichier;
-    const int         _iBdProgramVersion;
-    std::string       _szLastError;
+    const std::string   _szBdNomFichier;
+    const unsigned int  _iBdProgramVersion;
+    std::string         _szLastError;
 
     sqlite3 *   _db;
 };
