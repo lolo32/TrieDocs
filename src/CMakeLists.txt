@@ -15,14 +15,15 @@ SET(CMAKE_AUTORCC ON)
 # Find the Qt5Core library
 FIND_PACKAGE(Qt5Core REQUIRED)
 FIND_PACKAGE(Qt5Widgets REQUIRED)
+FIND_PACKAGE(Qt5Network REQUIRED)
 #FIND_PACKAGE(Qt5LinguistTools REQUIRED)
 
 GET_TARGET_PROPERTY(QtCore_location Qt5::Core LOCATION)
 GET_TARGET_PROPERTY(QtWidgets_location Qt5::Widgets LOCATION)
 
 # Fichiers sources par catégorie
-SET(TrieDocs_SOURCES   bdd.cpp main.cpp mainwindow.cpp dlgclient.cpp )
-SET(TrieDocs_HEADERS   bdd.h            mainwindow.h   dlgclient.h   )
+SET(TrieDocs_SOURCES            bdd.cpp main.cpp mainwindow.cpp dlgclient.cpp traduction.cpp )
+SET(TrieDocs_HEADERS   commun.h bdd.h            mainwindow.h   dlgclient.h   traduction.h   )
 SET(TrieDocs_RESOURCES resources.qrc)
 
 # Répertoire des librairies
