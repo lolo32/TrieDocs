@@ -16,19 +16,57 @@ SET(CMAKE_AUTORCC ON)
 FIND_PACKAGE(Qt5Core REQUIRED)
 FIND_PACKAGE(Qt5Widgets REQUIRED)
 FIND_PACKAGE(Qt5Network REQUIRED)
-#FIND_PACKAGE(Qt5LinguistTools REQUIRED)
+FIND_PACKAGE(Qt5LinguistTools REQUIRED)
 
 GET_TARGET_PROPERTY(QtCore_location Qt5::Core LOCATION)
 GET_TARGET_PROPERTY(QtWidgets_location Qt5::Widgets LOCATION)
 
 # Fichiers sources par catégorie
-SET(TrieDocs_SOURCES            bdd.cpp main.cpp mainwindow.cpp dlgclient.cpp traduction.cpp )
-SET(TrieDocs_HEADERS   commun.h bdd.h            mainwindow.h   dlgclient.h   traduction.h   )
-SET(TrieDocs_RESOURCES resources.qrc)
+FILE(GLOB TrieDocs_SOURCES   *.cpp )
+FILE(GLOB TrieDocs_HEADERS   *.h   )
+FILE(GLOB TrieDocs_RESOURCES *.qrc )
 
 # Répertoire des librairies
 INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libs/sqlite3 )
 INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libs/miniz )
+
+
+
+function(myQT5_ADD_TRANSLATION _qm_files)
+    foreach(_current_FILE ${ARGN})
+        get_filename_component(_abs_FILE ${_current_FILE} ABSOLUTE)
+        get_filename_component(_abs_DIR ${_abs_FILE} DIRECTORY)
+        get_filename_component(qm ${_abs_FILE} NAME_WE)
+        set(qm "${_abs_DIR}/${qm}.qm")
+
+        add_custom_command(OUTPUT ${qm}
+            PRE_BUILD
+            COMMAND ${Qt5_LRELEASE_EXECUTABLE}
+            ARGS ${_abs_FILE} -qm ${qm} -compress -removeidentical
+            DEPENDS ${_abs_FILE} VERBATIM
+        )
+        list(APPEND ${_qm_files} ${qm})
+    endforeach()
+    set(${_qm_files} ${${_qm_files}} PARENT_SCOPE)
+endfunction()
+
+FILE (GLOB TRANSLATIONS_FILES i18n/*.ts)
+
+OPTION (UPDATE_TRANSLATIONS "Update source translation i18n/*.ts")
+IF (UPDATE_TRANSLATIONS)
+  QT5_CREATE_TRANSLATION(QM_FILES ${FILES_TO_TRANSLATE} ${TRANSLATIONS_FILES})
+ELSE (UPDATE_TRANSLATIONS)
+  myQT5_ADD_TRANSLATION(QM_FILES ${TRANSLATIONS_FILES})
+ENDIF (UPDATE_TRANSLATIONS)
+
+ADD_CUSTOM_TARGET (i18n_target DEPENDS ${QM_FILES})
+
+#install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/i18n)
+
+# prevent the generated files from being deleted during make clean
+#set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
+
+
 
 SET( APPS "\${CMAKE_INSTALL_PREFIX}/bin/TrieDocs")
 IF( APPLE )
@@ -57,7 +95,7 @@ ENDIF( WIN32 )
 ADD_EXECUTABLE( TrieDocs WIN32 MACOSX_BUNDLE ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_RESOURCES} )
 TARGET_LINK_LIBRARIES(TrieDocs
   Qt5::Core
-  Qt5::Widgets 
+  Qt5::Widgets
   myminiz mysqlite3
   ${LIBS_PLATFORM}
 )
@@ -76,6 +114,8 @@ IF( APPLE)
     " COMPONENT Runtime
   )
 ENDIF( APPLE )
+
+
 
 # -----------------------------------------------------
 # Paramèttres pour CPack
