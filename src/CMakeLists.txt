@@ -3,6 +3,9 @@ SET( VERSION_MAJEUR 0 )
 SET( VERSION_MINEUR 0 )
 SET( VERSION_REVISION 1 )
 
+# Génération des traductions
+ADD_SUBDIRECTORY( i18n )
+
 # Find includes in corresponding build directories
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
@@ -15,7 +18,6 @@ SET(CMAKE_AUTORCC ON)
 # Find the Qt5Core library
 FIND_PACKAGE(Qt5Core REQUIRED)
 FIND_PACKAGE(Qt5Widgets REQUIRED)
-FIND_PACKAGE(Qt5Network REQUIRED)
 
 GET_TARGET_PROPERTY(QtCore_location      Qt5::Core      LOCATION)
 GET_TARGET_PROPERTY(QtWidgets_location   Qt5::Widgets   LOCATION)
@@ -64,4 +66,10 @@ IF( APPLE)
 ENDIF( APPLE )
 
 INCLUDE(cmake/CPack.txt)
-INCLUDE(cmake/Traductions.txt)
+
+FILE (GLOB FILES_moc_clean ${CMAKE_CURRENT_BINARY_DIR}/moc_*.cpp )
+FILE (GLOB FILES_ui_clean  ${CMAKE_CURRENT_BINARY_DIR}/ui_*.h )
+set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${FILES_moc_clean};${FILES_ui_clean}" )
+
+# Dépendance pour demander à CMake de générer les traductions avant de lancer automoc
+ADD_DEPENDENCIES (TrieDocs i18n_target)

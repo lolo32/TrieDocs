@@ -18,7 +18,7 @@ function(myQT5_ADD_TRANSLATION _qm_files)
     set(${_qm_files} ${${_qm_files}} PARENT_SCOPE)
 endfunction()
 
-FILE (GLOB TRANSLATIONS_FILES i18n/*.ts)
+FILE (GLOB TRANSLATIONS_FILES *.ts)
 
 OPTION (UPDATE_TRANSLATIONS "Update source translation i18n/*.ts")
 IF (UPDATE_TRANSLATIONS)
@@ -27,9 +27,4 @@ ELSE (UPDATE_TRANSLATIONS)
   myQT5_ADD_TRANSLATION(QM_FILES ${TRANSLATIONS_FILES})
 ENDIF (UPDATE_TRANSLATIONS)
 
-ADD_CUSTOM_TARGET (i18n_target DEPENDS ${QM_FILES})
-
-#install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/i18n)
-
-# prevent the generated files from being deleted during make clean
-#set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
+ADD_CUSTOM_TARGET (i18n_target ALL DEPENDS ${QM_FILES} VERBATIM) # SOURCES ${TRANSLATIONS_FILES})
