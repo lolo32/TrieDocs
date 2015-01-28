@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Veuillez vous identifier pour avoir accès aux documents</string>
+      <string>Veuillez vous identifier pour accéder aux documents</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
