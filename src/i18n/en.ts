@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en" sourcelanguage="fr">
+<TS version="2.1" language="en" sourcelanguage="fr">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>DlgClient</name>
     <message>
         <location filename="../dlgclient.ui" line="26"/>
-        <source>Veuillez vous identifier pour avoir accès aux documents</source>
+        <source>Veuillez vous identifier pour accéder aux documents</source>
         <translation>Please, login to access documents</translation>
     </message>
     <message>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>TrieDocs</source>
-        <translation></translation>
+        <translation>TrieDocs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="30"/>
