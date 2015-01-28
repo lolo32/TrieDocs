@@ -23,6 +23,7 @@ QString MajPremierCaractere( QString chaine )
  */
 Traduction::Traduction() :
     p_bCharge(false),
+    p_qszLangActuelle("fr"),
     QObject()
 {
 
@@ -42,10 +43,11 @@ Traduction::~Traduction()
 void Traduction::initialise()
 {
     QLocale locale;
+    QString qszLangueActuelle;
 
     // On récupère la langue de l’utilisateur
-    p_qszLangActuelle = QLocale::system().name(); // ex: "fr_FR"
-    p_qszLangActuelle.truncate(p_qszLangActuelle.lastIndexOf('_')); // ex: "fr"
+    qszLangueActuelle = QLocale::system().name(); // ex: "fr_FR"
+    qszLangueActuelle.truncate(p_qszLangActuelle.lastIndexOf('_')); // ex: "fr"
 
     // On ajoute la langue C, qui est le fr
     locale = QLocale( "fr" );
@@ -75,6 +77,9 @@ void Traduction::initialise()
 
     // On trie par ordre croissant
     qSort( p_Langues.begin(), p_Langues.end(), Traduction::trieLangues);
+
+    // On tente de charger la langue par la langue de l’utilisateur
+    this->set(qszLangueActuelle);
 
     p_bCharge = true;
 }
