@@ -26,6 +26,7 @@ GET_TARGET_PROPERTY(QtWidgets_location   Qt5::Widgets   LOCATION)
 FILE(GLOB TrieDocs_SOURCES   *.cpp )
 FILE(GLOB TrieDocs_HEADERS   *.h   )
 FILE(GLOB TrieDocs_RESOURCES *.qrc )
+FILE(GLOB TrieDocs_FENETRES  *.ui  )
 
 # Répertoire des librairies
 INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libs/sqlite3 )
@@ -42,13 +43,16 @@ IF( WIN32 )
 ENDIF( WIN32 )
 
 # Executable
-ADD_EXECUTABLE( TrieDocs WIN32 MACOSX_BUNDLE ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_RESOURCES} ${TrieDocs_ICONE} )
+ADD_EXECUTABLE( TrieDocs WIN32 MACOSX_BUNDLE ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_RESOURCES} ${TrieDocs_ICONE} ${TrieDocs_FENETRES} )
 TARGET_LINK_LIBRARIES(TrieDocs
   Qt5::Core
   Qt5::Widgets
   myminiz mysqlite3
   ${LIBS_PLATFORM}
 )
+
+# Dépendance pour demander à CMake de générer les traductions avant de lancer automoc
+ADD_DEPENDENCIES (TrieDocs i18n_target)
 
 # Options d’installation
 INSTALL( TARGETS TrieDocs
@@ -70,6 +74,3 @@ INCLUDE(cmake/CPack.txt)
 FILE (GLOB FILES_moc_clean ${CMAKE_CURRENT_BINARY_DIR}/moc_*.cpp )
 FILE (GLOB FILES_ui_clean  ${CMAKE_CURRENT_BINARY_DIR}/ui_*.h )
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${FILES_moc_clean};${FILES_ui_clean}" )
-
-# Dépendance pour demander à CMake de générer les traductions avant de lancer automoc
-ADD_DEPENDENCIES (TrieDocs i18n_target)
