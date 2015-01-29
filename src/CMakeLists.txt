@@ -34,7 +34,7 @@ INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libs/miniz )
 
 SET( APPS "\${CMAKE_INSTALL_PREFIX}/bin/TrieDocs")
 IF( APPLE )
-  INCLUDE(cmake/MacOS.txt)
+  INCLUDE(cmake/MacOS.cmake)
 ENDIF( APPLE )
 IF( WIN32 )
   SET( TrieDocs_ICONE icone.rc )
@@ -69,7 +69,7 @@ IF( APPLE)
   )
 ENDIF( APPLE )
 
-INCLUDE(cmake/CPack.txt)
+INCLUDE(cmake/CPack.cmake)
 
 FILE (GLOB FILES_moc_clean ${CMAKE_CURRENT_BINARY_DIR}/moc_*.cpp )
 FILE (GLOB FILES_ui_clean  ${CMAKE_CURRENT_BINARY_DIR}/ui_*.h )
