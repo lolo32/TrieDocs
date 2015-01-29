@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="en" sourcelanguage="fr">
-<defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>DlgClient</name>
     <message>
-        <location filename="../dlgclient.ui" line="26"/>
+        <location filename="../dlgclient.cpp" line="108"/>
         <source>Veuillez vous identifier pour accéder aux documents</source>
         <translation>Please, login to access documents</translation>
     </message>
     <message>
-        <location filename="../dlgclient.ui" line="44"/>
+        <location filename="../dlgclient.cpp" line="130"/>
+        <source>Identification</source>
+        <translation>Identification</translation>
+    </message>
+    <message>
+        <location filename="../dlgclient.cpp" line="131"/>
         <source>Identifiant de connexion</source>
         <translation>Login</translation>
     </message>
     <message>
-        <location filename="../dlgclient.ui" line="57"/>
+        <location filename="../dlgclient.cpp" line="132"/>
         <source>Mot de passe</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="../dlgclient.ui" line="68"/>
+        <location filename="../dlgclient.cpp" line="133"/>
         <source>Langue :</source>
         <translation>Language:</translation>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="41"/>
+        <location filename="../dlgclient.cpp" line="123"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../dlgclient.cpp" line="127"/>
+        <source>Annuler</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <location filename="../dlgclient.cpp" line="151"/>
         <source>Établissement de la connexion avec le serveur %1</source>
         <translation>Connecting to server %1</translation>
     </message>
