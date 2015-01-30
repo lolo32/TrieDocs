@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     {
-        DlgClient dlgClient("hephaistos");
+        DlgClient dlgClient( QLatin1String("hephaistos") );
         int ret = dlgClient.exec();
 
         if( ret != 1) {
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
             // On a maintenant la longueur de l’adresse du serveur, on lit l’adresse
             qfAppli.seek( qfi.size() - 4 - sizeof(int) - iAdresseServeurLong );
-            QString qszServeur = qfAppli.read(iAdresseServeurLong);
+            QString qszServeur = QString::fromUtf8( qfAppli.read(iAdresseServeurLong) );
 
             // On a les infos, on affiche la fenêtre de connexion et d’identification
             DlgClient dlgClient(qszServeur);

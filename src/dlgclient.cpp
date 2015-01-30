@@ -1,14 +1,17 @@
 #include "dlgclient.h"
 
+#include "dlgabout.h"
+
 #include "traduction.h"
 
-#include <QVBoxLayout>
+#include <QComboBox>
+#include <QDialogButtonBox>
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QDialogButtonBox>
-#include <QEvent>
 #include <QPushButton>
+#include <QVBoxLayout>
 
 /**
  * @brief Constructeur
@@ -105,7 +108,9 @@ void DlgClient::setStatutTexte()
 {
     QString str;
     if( strStatut == QStringLiteral("") ) {
-        str = tr("Veuillez vous identifier pour accéder aux documents");
+        //: Please, login to access documents
+        //~ Context Statut text on the top of the window
+        str = tr("Veuillez vous identifier pour acc\303\251der aux documents");
     } else {
          str = strStatut;
     }
@@ -117,15 +122,27 @@ void DlgClient::setStatutTexte()
  */
 void DlgClient::retranslateUi()
 {
+    //: Identification
+    //~ Context Window title
     this->setWindowTitle( tr("Identification") );
+    //: Login
+    //~ Context Place holder that indicate the use of the login input
     txtLogin->setPlaceholderText( tr("Identifiant de connexion") );
+    //: Password
+    //~ Context Place holder that indicate the use of the password input
     txtPassword->setPlaceholderText( tr("Mot de passe") );
-    lblLangue->setText( tr("Langue :") );
+    //: Language:
+    //~ Context Text that explain the combobox (language switch)
+    lblLangue->setText( tr("Langue\302\240:") );
     setStatutTexte();
 
     QPushButton *btn = btnBox->button(QDialogButtonBox::Ok);
+    //: OK
+    //~ Context Text on the OK button at the bottom
     btn->setText( tr("OK") );
     btn = btnBox->button(QDialogButtonBox::Cancel);
+    //: Cancel
+    //~ Context Text on the cancel button at the bottom
     btn->setText( tr("Annuler") );
 }
 
@@ -143,8 +160,13 @@ void DlgClient::on_btnBox_accepted()
     /*
      * TODO: Gestion de la connexion et vérification des identifiants
      */
-    strStatut = tr("Établissement de la connexion avec le serveur %1").arg( p_qszServeur );
+    //: Connecting to server %1
+    //~ Context Statut text on the top of the window that explain the connection is establishing
+    strStatut = tr("\303\211tablissement de la connexion avec le serveur %1").arg( p_qszServeur );
     setStatutTexte();
+
+    DlgAbout about(this);
+    about.exec();
 }
 
 /**
@@ -153,27 +175,6 @@ void DlgClient::on_btnBox_accepted()
  */
 void DlgClient::changeEvent(QEvent * event)
 {
-    if(0 != event)
-    {
-        switch(event->type())
-        {
-            // this event is send if a translator is loaded
-            case QEvent::LanguageChange:
-                retranslateUi();
-                break;
-            // this event is send, if the system, language changes
-            case QEvent::LocaleChange:
-                {
-                    QString locale = QLocale::system().name();
-                    locale.truncate(locale.lastIndexOf( QChar::fromLatin1('_') ));
-                    traduction.set(locale);
-                    retranslateUi();
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
+    traduction.retranslateUi(event, this);
     QDialog::changeEvent(event);
 }

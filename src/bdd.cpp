@@ -28,7 +28,7 @@ bool Bdd::OuvreBdd()
         bddRep.mkpath( qszBdd );
     }
 
-    qszBdd.append( QDir::separator() ).append( _szBdNomFichier.c_str() );
+    qszBdd.append( QDir::separator() ).append( QString::fromStdString(_szBdNomFichier) );
     qszBdd = QDir::toNativeSeparators( qszBdd );
     if( QFile::exists( qszBdd ) ) {
         existe = true;
@@ -55,13 +55,13 @@ bool Bdd::OuvreBdd()
             // La base de données n'existe pas, on la crée
 
             // Ouvre la ressource de création de la base de données
-            QFile bdCreateFile(":/res/db.sql");
+            QFile bdCreateFile( QStringLiteral(":/res/db.sql") );
             bdCreateFile.open(QIODevice::ReadOnly | QIODevice::Text);
             QString bdCreateScript;
 
             bdCreateScript
                     .append( QStringLiteral("BEGIN;") )
-                    .append( bdCreateFile.readAll() )
+                    .append( QString::fromUtf8( bdCreateFile.readAll() ) )
                     .append( QStringLiteral("COMMIT;") );
 
             // Crée la base
@@ -184,33 +184,59 @@ void Bdd::SetLastError(int sqlite3_interr)
 
     // Messages d'erreurs depuis les sources de sqlite3_UTF8
     const char* const aMsg[] = {
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "erreur de logique SQL ou base de données manquante"),
+        //: SQL logic error or missing database
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "erreur de logique SQL ou base de donn\303\251es manquante"),
         0,
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "accès refusé"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "la fonction de retours a demandé l'annulation de la requète"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "base de données verrouillée"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "table verrouillée"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "mémoire insuffisante"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "tentative d'écriture dans une base de données en lecture seule"),
+        //: access permission denied
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "acc\303\250s refus\303\251"),
+        //: callback requested query abort
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "la fonction de retours a demand\303\251 l\342\200\231annulation de la requ\303\250te"),
+        //: database is locked
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "base de donn\303\251es verrouill\303\251e"),
+        //: database table is locked
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "table verrouill\303\251e"),
+        //: out of memory
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "m\303\251moire insuffisante"),
+        //: attempt to write a readonly database
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "tentative d\342\200\231\303\251criture dans une base de donn\303\251es en lecture seule"),
+        //: interrupted
         QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "interrompu"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "erreur d'entrée/sortie du disque"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "la base de donnée est corrompue"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "opération inconnue"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "base de données ou disque plein"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "impossible d'ouvrir le fichier de la base de données"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "protocole bloqué"),
+        //: disk I/O error
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "erreur d\342\200\231entr\303\251e/sortie du disque"),
+        //: database disk image is malformed
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "la base de donn\303\251e est corrompue"),
+        //: unknown operation
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "op\303\251ration inconnue"),
+        //: database or disk is full
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "base de donn\303\251es ou disque plein"),
+        //: unable to open database file
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "impossible d\342\200\231ouvrir le fichier de la base de donn\303\251es"),
+        //: locking protocol
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "protocole bloqu\303\251"),
+        //: table contains no data
         QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "la table est vide"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "le schéma de la base de données a changé"),
+        //: database schema has changed
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "le sch\303\251ma de la base de donn\303\251es a chang\303\251"),
+        //: string or blob too big
         QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "texte ou binaire trop long"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "échec de contrainte"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "type de donnée incorrect"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "routine de bibliothèque appelé hors de la séquence"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "support des grands fichiers désactivé"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "autorisation refusée"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "erreur de format de base de données auxiliaire"),
+        //: constraint failed
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "\303\251chec de contrainte"),
+        //: datatype mismatch
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "type de donn\303\251e incorrect"),
+        //: library routine called out of sequence
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "routine de biblioth\303\250que appel\303\251e hors de la s\303\251quence"),
+        //: large file support is disabled
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "support des grands fichiers d\303\251sactiv\303\251"),
+        //: authorization denied
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "autorisation refus\303\251e"),
+        //: auxiliary database format error
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "erreur de format de base de donn\303\251es auxiliaire"),
+        //: bind or column index out of range
         QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "bind ou index de colonne hors de la plage"),
-        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "le fichier est chiffré ou n'est pas une base de données")
+        //: file is encrypted or is not a database
+        QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "le fichier est chiffr\303\251 ou n\342\200\231est pas une base de donn\303\251es")
     };
+    //: unknown error
     const char* zErr = QT_TRANSLATE_NOOP_UTF8("sqlite_msgerr", "erreur inconnue");
     int i = --sqlite3_interr;
     if( aMsg[i] != 0 )

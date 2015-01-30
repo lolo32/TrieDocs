@@ -102,8 +102,6 @@
     <property name="title">
      <string>&amp;Fichier</string>
     </property>
-    <addaction name="action_Connexion"/>
-    <addaction name="separator"/>
     <addaction name="action_Quitter"/>
    </widget>
    <widget class="QMenu" name="menu_Options">

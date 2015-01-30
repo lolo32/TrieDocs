@@ -6,6 +6,16 @@ SET( VERSION_REVISION 1 )
 # Génération des traductions
 ADD_SUBDIRECTORY( i18n )
 
+# Désactive l’autocast QString depuis/vers char*
+# Permet de vérifier que les convertion Latin/Utf8 sont bien respecté, car elles doivent être explicites
+ADD_DEFINITIONS( -DQT_NO_CAST_FROM_ASCII )
+ADD_DEFINITIONS( -DQT_NO_CAST_TO_ASCII )
+
+# Définit la version de l’application
+ADD_DEFINITIONS( -DTRIEDOCS_VERSION=${VERSION_MAJEUR}.${VERSION_MINEUR}.${VERSION_REVISION} )
+ADD_DEFINITIONS( -DTRIEDOCS_VERSION_STR="${VERSION_MAJEUR}.${VERSION_MINEUR}.${VERSION_REVISION}" )
+
+
 # Find includes in corresponding build directories
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.

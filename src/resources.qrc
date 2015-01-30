@@ -12,12 +12,13 @@
     <qresource prefix="/icones">
         <file alias="loupe.svg">icones/ico_loupe_gsagri04.svg</file>
         <file alias="tag.svg">icones/ico_tag_crisg.svg</file>
+        <file alias="application.svg">icone.svg</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="db.sql">ressources/db.sql</file>
         <file alias="db_local.sql">ressources/db_local.sql</file>
     </qresource>
-    <qresource lang="fr" prefix="/res">
+    <qresource prefix="/res" lang="fr">
         <file alias="db_local.sql">ressources/db_local_fr.sql</file>
     </qresource>
     <qresource prefix="/i18n">

@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "traduction.h"
+
 class QLabel;
 class QLineEdit;
 class QComboBox;
@@ -12,13 +14,15 @@ namespace Ui {
     class DlgClient;
 }
 
-class DlgClient : public QDialog
+class DlgClient : public QDialog, WidgetTraduit
 {
     Q_OBJECT
 
 public:
     explicit DlgClient(QString qszServeur, QWidget *parent = 0);
     ~DlgClient();
+
+    void retranslateUi();
 
 private slots:
     void on_btnBox_accepted();
@@ -28,7 +32,6 @@ protected:
      */
     void changeEvent(QEvent*);
 
-    void retranslateUi();
     void setStatutTexte();
 
 private:
