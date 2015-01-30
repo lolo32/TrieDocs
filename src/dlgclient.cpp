@@ -72,8 +72,10 @@ DlgClient::DlgClient(QString qszServeur, QWidget *parent) :
 
     mainLayout->addLayout(horizonLayout);
 
-    btnBox = new QDialogButtonBox(this);
-    btnBox->setStandardButtons( QDialogButtonBox::Cancel | QDialogButtonBox::Ok );
+    QDialogButtonBox *btnBox = new QDialogButtonBox(this);
+    btnOk = btnBox->addButton(QString(), QDialogButtonBox::AcceptRole);
+    btnOk->setDefault(true);
+    btnAnnuler = btnBox->addButton(QString(), QDialogButtonBox::RejectRole);
     mainLayout->addWidget(btnBox);
 
     connect(btnBox, SIGNAL(accepted()), this, SLOT(on_btnBox_accepted()));
@@ -81,6 +83,7 @@ DlgClient::DlgClient(QString qszServeur, QWidget *parent) :
 
     setTabOrder(txtLogin, txtPassword);
     setTabOrder(txtPassword, cbxLangues);
+    setTabOrder(cbxLangues, btnBox);
 
     retranslateUi();
 
@@ -120,6 +123,13 @@ void DlgClient::setStatutTexte()
  */
 void DlgClient::retranslateUi()
 {
+    //: OK
+    //~ Context Text on the OK button at the bottom
+    btnOk->setText( tr("OK") );
+    //: Cancel
+    //~ Context Text on the cancel button at the bottom
+    btnAnnuler->setText( tr("Annuler") );
+
     //: Identification
     //~ Context Window title
     this->setWindowTitle( tr("Identification") );
@@ -133,15 +143,6 @@ void DlgClient::retranslateUi()
     //~ Context Text that explain the combobox (language switch)
     lblLangue->setText( tr("Langue\302\240:") );
     setStatutTexte();
-
-    QPushButton *btn = btnBox->button(QDialogButtonBox::Ok);
-    //: OK
-    //~ Context Text on the OK button at the bottom
-    btn->setText( tr("OK") );
-    btn = btnBox->button(QDialogButtonBox::Cancel);
-    //: Cancel
-    //~ Context Text on the cancel button at the bottom
-    btn->setText( tr("Annuler") );
 }
 
 /**

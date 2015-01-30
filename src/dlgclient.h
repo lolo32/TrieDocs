@@ -8,7 +8,7 @@
 class QLabel;
 class QLineEdit;
 class QComboBox;
-class QDialogButtonBox;
+class QPushButton;
 
 namespace Ui {
     class DlgClient;
@@ -36,7 +36,7 @@ protected:
 
 private:
     Ui::DlgClient *ui;
-    QString        p_qszServeur;   /**< Adresse (IP ou DNS) du serveur distant */
+    QString        p_qszServeur;  //!< Adresse (IP ou DNS) du serveur distant
     bool           p_initialise;
 
     // Contrôles pour l’UI
@@ -46,7 +46,8 @@ private:
     QLineEdit        *txtPassword;//!< Champ de saisie du mot de passe
     QLabel           *lblLangue;  //!< Description de la liste déroulante
     QComboBox        *cbxLangues; //!< Liste déroulante des langues
-    QDialogButtonBox *btnBox;     //!< Bouttons en bas de la fenêtre
+    QPushButton      *btnOk;      //!< Boutton OK en bas de la fenêtre
+    QPushButton      *btnAnnuler; //!< Boutton Annuler en bas de la fenêtre
 };
 
 #endif // DLGCLIENT_H
