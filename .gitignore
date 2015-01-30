@@ -28,12 +28,15 @@ Makefile*
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
+*_automoc.cpp
 Thumbs.db
 *.res
 *.rc
 *.embed.manifest
 /.qmake.cache
 /.qmake.stash
+TrieDocs.app
+TrieDocs.exe
 
 # qtcreator generated files
 *.pro.user*
