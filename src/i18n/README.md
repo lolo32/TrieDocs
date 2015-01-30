@@ -4,11 +4,11 @@
 
 Il faut créer le fichier qui va contenir la nouvelle traduction, en créant un
 fichier vide dont le nom est le code de la langue terminé par l’extension `.ts`
-dans le répertoire `src/i18n`
+dans le répertoire `src/i18n`.
 
 Par exemple, si la langue à créer est l’anglais, il faut créer un fichier
 ayant pour nom `en.ts`, car le code ISO 639-1 de l’anglais est `en`. Un autre
-exemple avec |’allemand qui a pour code `de`.
+exemple avec l’allemand qui a pour code `de`.
 
 Vous pouvez vous repporter à la page sur [Wikipedia](http://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1)
 donnant un tableau des différents codes.
@@ -60,5 +60,5 @@ compilation de TrieDocs.
 Comme les traductions sont incluses en tant que ressources dans l’application,
 il faut s’assurer que la traduction, une fois modifiée, est de nouveau incluse.
 
-Il suffit de supprimer le fichier compilé `src/qrc_resources.cpp` se trouvant
+Il suffit de supprimer le fichier généré `src/qrc_resources.cpp` se trouvant
 dans l’arborescence de compilation.
