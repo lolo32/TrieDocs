@@ -1,7 +1,5 @@
 #include "dlgclient.h"
 
-#include "dlgabout.h"
-
 #include "traduction.h"
 
 #include <QComboBox>
@@ -164,9 +162,6 @@ void DlgClient::on_btnBox_accepted()
     //~ Context Statut text on the top of the window that explain the connection is establishing
     strStatut = tr("\303\211tablissement de la connexion avec le serveur %1").arg( p_qszServeur );
     setStatutTexte();
-
-    DlgAbout about(this);
-    about.exec();
 }
 
 /**
