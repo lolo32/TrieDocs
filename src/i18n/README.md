@@ -44,7 +44,7 @@ dans la langue native*
 `<translation></translation>` doit en effet contenir le nom de la langue, par
 exemple :
 | Code de la langue |   Nom de la langue  | Description              |
-|:-----------------:|:-------------------:|--------------------------|
+| :---------------: | :-----------------: | ------------------------ |
 | `fr_CA`           | `Français (Canada)` | pour le français d’origine canadienne |
 | `es`              | `Español`           | pour l’espagnol général  |
 | `es_BR`           | `Brasileño`         | pour le brésilien = espagnol parlé au brésil |
