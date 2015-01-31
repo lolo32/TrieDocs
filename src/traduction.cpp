@@ -5,32 +5,28 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QIcon>
-#if INCLUT_QT_TRADS
-#  include <QLibraryInfo>
-#endif
 #include <QMenu>
 #include <QLocale>
 
 Traduction traduction;
 
-/**
- * @brief Permet de mettre une majuscule sur le premier caractère de la chaîne
- * @param chaine[in] Chaîne dont le premier caractère doit être mit en majuscule
- * @return La chaîne de caractères, avec la majuscule au début
- */
-inline QString MajPremierCaractere( QString chaine )
+QString Traduction::nomLangue(const QString &fichier)
 {
-    chaine[0] = chaine.at(0).toTitleCase();
-    return chaine;
+    QTranslator trad;
+    trad.load( fichier );
+    //: This is the language name of the file
+    QString langue = trad.translate("Language", "Fran\303\247ais");
+
+    return langue.size() ? langue : QStringLiteral("Fran\303\247ais");
 }
 
 /**
  * @brief Constructeur
  */
 Traduction::Traduction() :
-    p_bCharge(false),
+    QObject(),
     p_qszLangActuelle( QLatin1String("fr") ),
-    QObject()
+    p_bCharge(false)
 {
 
 }
@@ -59,23 +55,24 @@ void Traduction::initialise()
     locale = QLocale( QStringLiteral("fr") );
     QLocale::setDefault(locale);
     struct langue langue = {
-        MajPremierCaractere( locale.nativeLanguageName() ),
+        nomLangue( QStringLiteral("fr") ),
         QLatin1String("fr")
     };
     p_Langues.append( langue );
 
     // On recherche la liste des langues incluses
     QDir dir( QStringLiteral(":/i18n/") );
-    QStringList fichiers = dir.entryList( QStringList( QStringLiteral("*.qm") ) );
+    QStringList fichiers = dir.entryList( QStringList( QStringLiteral("*.qm") ), QDir::Files );
 
-    for (int i=0; i<fichiers.size(); ++i) {
+    QMutableStringListIterator i(fichiers);
+    while( i.hasNext() ) {
+        i.next();
         // récupère les traductions par le nom
         QString iso;
-        iso = fichiers[i];                                         // ex: "en.qm"
-        iso.truncate( iso.lastIndexOf( QChar::fromLatin1('.') ) ); // ex: "en"
+        iso = i.value();                                                // ex: "triedocs_en.qm"
+        iso = iso.mid(9, iso.lastIndexOf( QChar::fromLatin1('.') )-9 ); // ex: "en"
 
-        locale = QLocale( iso );
-        langue.nom = MajPremierCaractere( locale.nativeLanguageName() );
+        langue.nom = nomLangue( dir.filePath(i.value() ) );
         langue.iso = iso;
 
         p_Langues.append( langue );
@@ -106,9 +103,11 @@ void Traduction::rempli(QMenu *menu)
 
     for (int i=0; i<p_Langues.size(); ++i) {
         struct langue langue = p_Langues.at(i);
-        QIcon ico( QString( QLatin1String(":/langs/%1.svg") ).arg(langue.iso) );
+        QIcon ico;
+        ico.addFile(QString( QLatin1String(":/langs/%1.svg") ).arg(langue.iso), QSize(), QIcon::Normal, QIcon::Off );
 
-        QAction *action = new QAction( ico, langue.nom, menu );
+        QAction *action = new QAction( langue.nom, menu );
+        action->setIcon(ico);
         action->setCheckable(true);
         action->setData(langue.iso);
         if( p_qszLangActuelle == langue.iso )
@@ -170,21 +169,6 @@ inline bool Traduction::trieLangues(const struct langue &a, const struct langue 
 }
 
 /**
- * @brief Charge un nuveau fichier de traduction et le passe à l’application
- * @param fichier[in]     Chemin vers le .qm à charger
- * @param traducteur[out] QTranslator devant charger la traduction
- * @return  true si la traduction a été correctement chargée
- * @return  fakse en cas d’erreur
- */
-inline bool Traduction::chargeTraducteur(const QString & fichier, QTranslator & traducteur)
-{
-    bool charge = traducteur.load( fichier );
-    if( charge )
-        charge = qApp->installTranslator( &traducteur );
-    return charge;
-}
-
-/**
  * @brief Définit la nouvelle langue par le numéro d'index
  * @param index[in] index de la nouvelle langue devant être chargée
  * @return true si on a changé de langue
@@ -208,28 +192,37 @@ bool Traduction::set(unsigned int index)
         QLocale::setDefault(langue);
 
         // Un traducteur a déjà été chargé, on le supprime si langue précédente != "C"
-        if( p_qszLangActuelle != QLatin1String("fr") )
-            ret = qApp->removeTranslator(&p_traducteur);
-#if INCLUT_QT_TRADS
-        if( p_qszLangActuelle != QLatin1String("en") )
-            ret = qApp->removeTranslator(&p_traducteurQT);
-#endif
+        while( p_traducteurs.size() ) {
+            QTranslator *trad = p_traducteurs.first();
+            ret = qApp->removeTranslator( trad );
+            p_traducteurs.removeFirst();
+            delete trad;
+        }
 
-        QString fichier;
-        if( iso != QLatin1String("fr") ) {
-            // La nouvelle langue est dfférente de "C"="fr", on charge un nouveau traducteur
-            fichier = QString( QLatin1String(":/i18n/%1.qm") ).arg(iso);
-            this->chargeTraducteur(fichier, p_traducteur);
+        // La nouvelle langue est dfférente de "C"="fr", on charge un nouveau traducteur
+        QString fichier = QString( QLatin1String("triedocs_%1") ).arg(iso);
+
+        static QStringList dossiers;
+        if( !dossiers.size() )
+            dossiers
+                    << QStringLiteral(":/i18n/") // Répertoire interne
+                    << QDir::currentPath();     // Répertoire courant de travail de l’application
+
+        QMutableStringListIterator i(dossiers);
+        while( i.hasNext() ) {
+            i.next();
+            QTranslator *trad = new QTranslator();
+            bool b = trad->isEmpty();
+            bool ok = trad->load(fichier, i.value());
+            b = trad->isEmpty();
+            if( ok )
+                ok = qApp->installTranslator( trad );
+
+            if( ok )
+                p_traducteurs.append( trad );
+            else
+                delete trad;
         }
-#if INCLUT_QT_TRADS
-        if( iso != QLatin1String("en") ) {
-            fichier = QLibraryInfo::location(QLibraryInfo::TranslationsPath)
-                    .append(QDir::separator())
-                    .append( QStringLiteral("qt_") )
-                    .append(iso);
-            this->chargeTraducteur(fichier, p_traducteurQT);
-        }
-#endif
 
         p_qszLangActuelle = iso;
 

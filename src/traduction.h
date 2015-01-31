@@ -47,15 +47,12 @@ protected:
 
     void initialise();
     static bool trieLangues(const struct langue&, const struct langue&);
-    bool chargeTraducteur(const QString&, QTranslator&);
+    QString nomLangue(const QString&);
 
     QString               p_qszLangActuelle;
     QList<struct langue>  p_Langues;
     bool                  p_bCharge;
-    QTranslator           p_traducteur;
-#if INCLUT_QT_TRADS
-    QTranslator           p_traducteurQT;
-#endif
+    QList<QTranslator*>   p_traducteurs;
 };
 
 extern Traduction traduction;

@@ -45,60 +45,69 @@
 <context>
     <name>DlgClient</name>
     <message>
-        <location filename="../dlgclient.cpp" line="113"/>
+        <location filename="../dlgclient.cpp" line="114"/>
         <source>Veuillez vous identifier pour accéder aux documents</source>
         <extracomment>Please, login to access documents</extracomment>
         <translation>Please, login to access documents</translation>
         <extra-Context>Statut text on the top of the window</extra-Context>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="127"/>
+        <location filename="../dlgclient.cpp" line="135"/>
         <source>Identification</source>
         <extracomment>Identification</extracomment>
         <translation>Identification</translation>
         <extra-Context>Window title</extra-Context>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="130"/>
+        <location filename="../dlgclient.cpp" line="138"/>
         <source>Identifiant de connexion</source>
         <extracomment>Login</extracomment>
         <translation>Login</translation>
         <extra-Context>Place holder that indicate the use of the login input</extra-Context>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="133"/>
+        <location filename="../dlgclient.cpp" line="141"/>
         <source>Mot de passe</source>
         <extracomment>Password</extracomment>
         <translation>Password</translation>
         <extra-Context>Place holder that indicate the use of the password input</extra-Context>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="136"/>
+        <location filename="../dlgclient.cpp" line="144"/>
         <source>Langue :</source>
         <extracomment>Language:</extracomment>
         <translation>Language:</translation>
         <extra-Context>Text that explain the combobox (language switch)</extra-Context>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="142"/>
+        <location filename="../dlgclient.cpp" line="128"/>
         <source>OK</source>
         <extracomment>OK</extracomment>
         <translation>OK</translation>
         <extra-Context>Text on the OK button at the bottom</extra-Context>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="146"/>
+        <location filename="../dlgclient.cpp" line="131"/>
         <source>Annuler</source>
         <extracomment>Cancel</extracomment>
         <translation>Cancel</translation>
         <extra-Context>Text on the cancel button at the bottom</extra-Context>
     </message>
     <message>
-        <location filename="../dlgclient.cpp" line="165"/>
+        <location filename="../dlgclient.cpp" line="164"/>
         <source>Établissement de la connexion avec le serveur %1</source>
         <extracomment>Connecting to server %1</extracomment>
         <translation>Connecting to server %1</translation>
         <extra-Context>Statut text on the top of the window that explain the connection is establishing</extra-Context>
+    </message>
+</context>
+<context>
+    <name>Language</name>
+    <message>
+        <location filename="../traduction.cpp" line="18"/>
+        <source>Français</source>
+        <extracomment>This is the language name of the file</extracomment>
+        <translation>English</translation>
     </message>
 </context>
 <context>
@@ -134,32 +143,37 @@
         <translation>&amp;Options</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="117"/>
+        <location filename="../mainwindow.ui" line="113"/>
+        <source>&amp;Langue</source>
+        <translation>&amp;Lang</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="122"/>
         <source>&amp;?</source>
         <translation>&amp;?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="128"/>
+        <location filename="../mainwindow.ui" line="133"/>
         <source>&amp;Connexion...</source>
         <translation>&amp;Connection...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="133"/>
+        <location filename="../mainwindow.ui" line="145"/>
         <source>&amp;Quitter</source>
         <translation>E&amp;xit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="138"/>
+        <location filename="../mainwindow.ui" line="150"/>
         <source>&amp;Configuration...</source>
         <translation>&amp;Config...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="143"/>
+        <location filename="../mainwindow.ui" line="155"/>
         <source>À &amp;propos de...</source>
         <translation>&amp;About...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="148"/>
+        <location filename="../mainwindow.ui" line="160"/>
         <source>&amp;Importer des fichiers...</source>
         <translation>&amp;Import files...</translation>
     </message>
