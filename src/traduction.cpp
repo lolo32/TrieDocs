@@ -64,15 +64,14 @@ void Traduction::initialise()
     QDir dir( QStringLiteral(":/i18n/") );
     QStringList fichiers = dir.entryList( QStringList( QStringLiteral("*.qm") ), QDir::Files );
 
-    QMutableStringListIterator i(fichiers);
+    QStringListIterator i(fichiers);
     while( i.hasNext() ) {
-        i.next();
         // récupère les traductions par le nom
-        QString iso;
-        iso = i.value();                                                // ex: "triedocs_en.qm"
+        QString nomFichier = i.next();
+        QString iso = nomFichier;                                       // ex: "triedocs_en.qm"
         iso = iso.mid(9, iso.lastIndexOf( QChar::fromLatin1('.') )-9 ); // ex: "en"
 
-        langue.nom = nomLangue( dir.filePath(i.value() ) );
+        langue.nom = nomLangue( dir.filePath( nomFichier ) );
         langue.iso = iso;
 
         p_Langues.append( langue );
@@ -205,15 +204,14 @@ bool Traduction::set(unsigned int index)
         static QStringList dossiers;
         if( !dossiers.size() )
             dossiers
-                    << QStringLiteral(":/i18n/") // Répertoire interne
+                    << QStringLiteral(":/i18n") // Répertoire interne
                     << QDir::currentPath();     // Répertoire courant de travail de l’application
 
-        QMutableStringListIterator i(dossiers);
+        QStringListIterator i(dossiers);
         while( i.hasNext() ) {
-            i.next();
             QTranslator *trad = new QTranslator();
             bool b = trad->isEmpty();
-            bool ok = trad->load(fichier, i.value());
+            bool ok = trad->load(fichier, i.next());
             b = trad->isEmpty();
             if( ok )
                 ok = qApp->installTranslator( trad );
