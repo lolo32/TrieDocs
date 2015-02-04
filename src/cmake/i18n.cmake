@@ -61,7 +61,7 @@ function(myQT5_ADD_TRANSLATION _qm_files)
         add_custom_command(OUTPUT ${qm}
             PRE_BUILD
             COMMAND ${Qt5_LRELEASE_EXECUTABLE}
-            ARGS ${_abs_FILE} -qm ${qm} -compress -removeidentical
+            ARGS  -markuntranslated ! -removeidentical ${_abs_FILE} -qm ${qm}
             DEPENDS ${_abs_FILE} VERBATIM
         )
         list(APPEND ${_qm_files} ${qm})
@@ -69,13 +69,13 @@ function(myQT5_ADD_TRANSLATION _qm_files)
     set(${_qm_files} ${${_qm_files}} PARENT_SCOPE)
 endfunction()
 
-FILE (GLOB TRANSLATIONS_FILES *.ts)
+FILE (GLOB TRANSLATIONS_FILES i18n/*.ts)
 
 OPTION (UPDATE_TRANSLATIONS "Update source translation i18n/*.ts")
 IF (UPDATE_TRANSLATIONS)
-  FILE(GLOB TrieDocs_SOURCES   ../*.cpp )
-  FILE(GLOB TrieDocs_HEADERS   ../*.h   )
-  FILE(GLOB TrieDocs_FENETRES  ../*.ui  )
+  FILE(GLOB TrieDocs_SOURCES   *.cpp )
+  FILE(GLOB TrieDocs_HEADERS   *.h   )
+  FILE(GLOB TrieDocs_FENETRES  *.ui  )
   myQT5_CREATE_TRANSLATION(QM_FILES ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_FENETRES} ${TRANSLATIONS_FILES} OPTIONS -source-language fr )
   # prevent the generated files from being deleted during make clean
   set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
@@ -84,3 +84,7 @@ ELSE (UPDATE_TRANSLATIONS)
 ENDIF (UPDATE_TRANSLATIONS)
 
 ADD_CUSTOM_TARGET (i18n_target DEPENDS ${QM_FILES} ${TRANSLATIONS_FILES} VERBATIM SOURCES ${TRANSLATIONS_FILES})
+
+set_property(TARGET i18n_target
+   APPEND PROPERTY AUTOGEN_TARGET_DEPENDS TrieDocs_automoc
+ )

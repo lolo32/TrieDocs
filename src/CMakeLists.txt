@@ -1,10 +1,3 @@
-# Version
-SET( VERSION_MAJEUR 0 )
-SET( VERSION_MINEUR 0 )
-SET( VERSION_REVISION 1 )
-
-# Génération des traductions
-ADD_SUBDIRECTORY( i18n )
 
 # Désactive l’autocast QString depuis/vers char*
 # Permet de vérifier que les convertion Latin/Utf8 sont bien respecté, car elles doivent être explicites
@@ -12,18 +5,18 @@ ADD_DEFINITIONS( -DQT_NO_CAST_FROM_ASCII )
 ADD_DEFINITIONS( -DQT_NO_CAST_TO_ASCII )
 
 # Définit la version de l’application
-ADD_DEFINITIONS( -DTRIEDOCS_VERSION=${VERSION_MAJEUR}.${VERSION_MINEUR}.${VERSION_REVISION} )
-ADD_DEFINITIONS( -DTRIEDOCS_VERSION_STR="${VERSION_MAJEUR}.${VERSION_MINEUR}.${VERSION_REVISION}" )
+ADD_DEFINITIONS( -DTRIEDOCS_VERSION=${TrieDocs_VERSION_MAJOR}.${TrieDocs_VERSION_MINOR}.${TrieDocs_VERSION_PATCH} )
+ADD_DEFINITIONS( -DTRIEDOCS_VERSION_STR="${TrieDocs_VERSION_MAJOR}.${TrieDocs_VERSION_MINOR}.${TrieDocs_VERSION_PATCH}" )
 
 
 # Find includes in corresponding build directories
-SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+SET( CMAKE_INCLUDE_CURRENT_DIR ON )
 # Instruct CMake to run moc automatically when needed.
-SET(CMAKE_AUTOMOC ON)
+SET( CMAKE_AUTOMOC ON )
 # Support automatique des interfaces <fichier>.ui
-SET(CMAKE_AUTOUIC ON)
+SET( CMAKE_AUTOUIC ON )
 # Compilation auto des ressources .qrc
-SET(CMAKE_AUTORCC ON)
+SET( CMAKE_AUTORCC ON )
 
 # Find the Qt5Core library
 FIND_PACKAGE(Qt5Core REQUIRED)
@@ -37,6 +30,7 @@ FILE(GLOB TrieDocs_SOURCES   *.cpp )
 FILE(GLOB TrieDocs_HEADERS   *.h   )
 FILE(GLOB TrieDocs_RESOURCES *.qrc )
 FILE(GLOB TrieDocs_FENETRES  *.ui  )
+FILE(GLOB TrieDocs_TRADS     ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm} )
 
 # Répertoire des librairies
 INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libs/sqlite3 )
@@ -47,9 +41,7 @@ IF( APPLE )
   INCLUDE(cmake/MacOS.cmake)
 ENDIF( APPLE )
 IF( WIN32 )
-  SET( TrieDocs_ICONE icone.rc )
-  SET( APPS "\${CMAKE_INSTALL_PREFIX}/bin/TrieDocs.exe" )
-  SET( LIBS_PLATFORM ws2_32 )
+  INCLUDE(cmake/Windows.cmake)
 ENDIF( WIN32 )
 
 # Executable
@@ -60,6 +52,7 @@ TARGET_LINK_LIBRARIES(TrieDocs
   myminiz mysqlite3
   ${LIBS_PLATFORM}
 )
+set_property(TARGET TrieDocs PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Dépendance pour demander à CMake de générer les traductions avant de lancer automoc
 ADD_DEPENDENCIES (TrieDocs i18n_target)
@@ -84,3 +77,6 @@ INCLUDE(cmake/CPack.cmake)
 FILE (GLOB FILES_moc_clean ${CMAKE_CURRENT_BINARY_DIR}/moc_*.cpp )
 FILE (GLOB FILES_ui_clean  ${CMAKE_CURRENT_BINARY_DIR}/ui_*.h )
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${FILES_moc_clean};${FILES_ui_clean}" )
+
+# Génération des traductions
+INCLUDE( cmake/i18n.cmake )
