@@ -8,7 +8,8 @@
 
 #define MINIZ_NO_TIME
 
-#define MINIZ_NO_ZLIB_COMPATIBLE_NAME
+/* laisse les alias zlib */
+//#define MINIZ_NO_ZLIB_COMPATIBLE_NAME
 
 #ifndef MZ_LIBMINIZ
 
