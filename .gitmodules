@@ -6,7 +6,7 @@
 	url = git://github.com/polarssl/polarssl.git
 [submodule "3party/libscrypt-git"]
 	path = 3party/libscrypt-git
-	url = https://github.com/technion/libscrypt.git
+	url = git://github.com/lolo32/libscrypt.git
 [submodule "3party/lzham-git"]
 	path = 3party/lzham-git
 	url = git://github.com/richgel999/lzham_codec.git
