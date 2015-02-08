@@ -19,12 +19,12 @@ ADD_LIBRARY( myscrypt STATIC ${myscrypt_SOURCES} ${myscrypt_HEADERS} )
 INCLUDE_DIRECTORIES( ${myscrypt_ROOT} )
 INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/3party/polarssl-git/include )
 
-ADD_EXECUTABLE( asiantest
+ADD_EXECUTABLE( check_libscrypt
     EXCLUDE_FROM_ALL
     ${myscrypt_ROOT}/main.c
     ${myscrypt_ROOT}/crypto_scrypt-hexconvert.c
     ${myscrypt_ROOT}/crypto_scrypt-hexconvert.h
 )
-TARGET_LINK_LIBRARIES( asiantest
+TARGET_LINK_LIBRARIES( check_libscrypt
     myscrypt polarssl
 )
