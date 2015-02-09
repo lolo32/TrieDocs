@@ -47,25 +47,7 @@ exemple :
 | :---------------: | :-----------------: | ------------------------ |
 | `fr_CA`           | `Français (Canada)` | pour le français d’origine canadienne |
 | `es`              | `Español`           | pour l’espagnol général  |
-| `es_BR`           | `Brasileño`         | pour le brésilien = espagnol parlé au brésil |
-
-## Ajouter la traduction au programme
-
-Il faut éditer le fichier des ressources `src/resources.qrc` en rajoutant la
-référence au nouveau fichier de traduction.
-
-Par exemple, dans le morceau ci-dessous, il n’y a que l’anglais.
-
-    <qresource prefix="/i18n">
-        <file alias="triedocs_en.qm">i18n/en.qm</file>
-    </qresource>
-
-On rajoute l’espagnol :
-
-    <qresource prefix="/i18n">
-        <file alias="triedocs_en.qm">i18n/en.qm</file>
-        <file alias="triedocs_es_ES.qm">i18n/es_ES.qm</file>
-    </qresource>
+| `pt_BR`           | `Brasileño`         | pour le brésilien = portugais parlé au brésil |
 
 ## Tester
 

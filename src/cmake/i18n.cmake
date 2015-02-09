@@ -1,12 +1,13 @@
 # Liste des langues à générer
 # Une langue par ligne
 SET(GEN_TRADUCTIONS
-    en
+    en      # Anglais
 )
 
 FIND_PACKAGE(Qt5LinguistTools REQUIRED)
 
 # Fonction réécrite pour appeler la version modifiée de la compression des .qm
+# et spécifier la langue source lors de la création des fichiers de traduction
 function(myQT5_CREATE_TRANSLATION _qm_files)
     set(options)
     set(oneValueArgs)
@@ -76,16 +77,39 @@ function(myQT5_ADD_TRANSLATION _qm_files)
     set(${_qm_files} ${${_qm_files}} PARENT_SCOPE)
 endfunction()
 
+LIST( SORT GEN_TRADUCTIONS )
+# Génère la liste des fichiers traductions à traiter
 set(TRANSLATIONS_FILES)
 foreach( _trad ${GEN_TRADUCTIONS} )
     list( APPEND TRANSLATIONS_FILES "i18n/${_trad}.ts" )
 endforeach()
 
+#######################
+# Modifie le fichier de ressources pour intégrer TOUTES les langues définies au début du fichier
+
+# Lit le fichier de ressources
+FILE( READ resources.qrc RESSOURCES_XML )
+SET( RESSOURCES_ORIGINE ${RESSOURCES_XML} )
+# Supprime la liste des traductions
+# Les lignes sont du style `<file alias="triedocs_en.qm">i18n/en.qm</file>`
+STRING( REGEX REPLACE "        <file alias=\"triedocs_[a-zA-Z_]+\\.qm\">i18n/[a-zA-Z_]+\\.qm</file>\n" "" RESSOURCES_XML ${RESSOURCES_XML} )
+# Génère les lignes à rajouter pour les traductions
+SET(_lang_ajouter)
+FOREACH(_lang ${GEN_TRADUCTIONS})
+    SET( _lang_ajouter "${_lang_ajouter}        <file alias=\"triedocs_${_lang}.qm\">i18n/${_lang}.qm</file>\n" )
+ENDFOREACH()
+# On les ajoute
+STRING( REGEX REPLACE "<qresource prefix=\"/i18n\">\n" "<qresource prefix=\"/i18n\">\n${_lang_ajouter}" RESSOURCES_XML ${RESSOURCES_XML} )
+# On écrit le nouveau fichier de ressource si il y a modification
+IF( NOT ${RESSOURCES_XML} STREQUAL ${RESSOURCES_ORIGINE} )
+    FILE( WRITE resources.qrc "${RESSOURCES_XML}" )
+ENDIF()
+
+#######################
+# Commandes pour lancer la régénération/compilation des traductions
+
 OPTION (UPDATE_TRANSLATIONS "Update source translation i18n/*.ts")
 IF (UPDATE_TRANSLATIONS)
-  FILE(GLOB TrieDocs_SOURCES   *.cpp )
-  FILE(GLOB TrieDocs_HEADERS   *.h   )
-  FILE(GLOB TrieDocs_FENETRES  *.ui  )
   myQT5_CREATE_TRANSLATION(QM_FILES ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_FENETRES} ${TRANSLATIONS_FILES} OPTIONS -source-language fr )
   # prevent the generated files from being deleted during make clean
   set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
@@ -93,10 +117,13 @@ ELSE (UPDATE_TRANSLATIONS)
   myQT5_ADD_TRANSLATION(QM_FILES ${TRANSLATIONS_FILES})
 ENDIF (UPDATE_TRANSLATIONS)
 
+# Cible pour compiler les traductions
 ADD_CUSTOM_TARGET (i18n_target DEPENDS ${QM_FILES} ${TRANSLATIONS_FILES} VERBATIM SOURCES ${TRANSLATIONS_FILES})
 
+# Ajout d’une règle pour recompiler les ressources si une traduction a été mise à jour
 SET_PROPERTY(TARGET i18n_target
    APPEND PROPERTY AUTOGEN_TARGET_DEPENDS TrieDocs_automoc
  )
 
+# Régénère les ressources si une traduction a été mise à jour
 SET_SOURCE_FILES_PROPERTIES( qrc_resources.cpp PROPERTIES OBJECT_DEPENDS "${QM_FILES}" )
