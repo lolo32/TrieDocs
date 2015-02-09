@@ -2,12 +2,11 @@
 
 ## Créer le fichier de la nouvelle traduction
 
-Il faut créer le fichier qui va contenir la nouvelle traduction, en créant un
-fichier vide dont le nom est le code de la langue terminé par l’extension `.ts`
-dans le répertoire `src/i18n`.
+Il faut éditer le fichier `src/cmake/i18n.cmake`, et rajouter la ou les
+langue(s) à la liste `SET(GEN_TRADUCTIONS` se trouvant au début du fichier.
 
-Par exemple, si la langue à créer est l’anglais, il faut créer un fichier
-ayant pour nom `en.ts`, car le code ISO 639-1 de l’anglais est `en`. Un autre
+Par exemple, si la langue à créer est l’anglais, il faut ajouter une ligne
+ayant pour nom `en`, car le code ISO 639-1 de l’anglais est `en`. Un autre
 exemple avec le brésilien qui a pour code `pt_BR`.
 
 Vous pouvez vous repporter à la page sur [Lingoes](http://www.lingoes.net/en/translator/langcode.htm)
@@ -83,11 +82,3 @@ partir de Qt Lignuist par exemple.
 
 Il ne reste plus qu’à tester la nouvelle traduction en lançant une nouvelle
 compilation de TrieDocs.
-
-### En cas d’erreur de traduction pour retester
-
-Comme les traductions sont incluses en tant que ressources dans l’application,
-il faut s’assurer que la traduction, une fois modifiée, est de nouveau incluse.
-
-Il suffit de supprimer le fichier généré `src/qrc_resources.cpp` se trouvant
-dans l’arborescence de compilation.
