@@ -5,5 +5,13 @@ PROJECT(TrieDocs
   VERSION 0.0.1.0
 )
 
+SET( BUILD_SHARED_LIBS   OFF CACHE BOOL "build shared/static libs" )
+SET( BUILD_X64           ON  CACHE BOOL "build 64-bit"             )
+
+IF( NOT CMAKE_BUILD_TYPE )
+  SET( CMAKE_BUILD_TYPE Release )
+ENDIF( NOT CMAKE_BUILD_TYPE )
+
+ADD_SUBDIRECTORY(3party)
 ADD_SUBDIRECTORY(libs)
 ADD_SUBDIRECTORY(src)
