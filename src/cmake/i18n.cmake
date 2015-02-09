@@ -1,3 +1,9 @@
+# Liste des langues à générer
+# Une langue par ligne
+SET(GEN_TRADUCTIONS
+    en
+)
+
 FIND_PACKAGE(Qt5LinguistTools REQUIRED)
 
 # Fonction réécrite pour appeler la version modifiée de la compression des .qm
@@ -23,6 +29,7 @@ function(myQT5_CREATE_TRANSLATION _qm_files)
     endforeach()
     foreach(_ts_file ${_my_tsfiles})
         if(_my_sources)
+          get_filename_component( _ts_lang ${_ts_file} NAME_WE )
           # make a list file to call lupdate on, so we don't make our commands too
           # long for some systems
           get_filename_component(_ts_name ${_ts_file} NAME_WE)
@@ -42,7 +49,7 @@ function(myQT5_CREATE_TRANSLATION _qm_files)
         endif()
         add_custom_command(OUTPUT ${_ts_file}
             COMMAND ${Qt5_LUPDATE_EXECUTABLE}
-            ARGS ${_lupdate_options} "@${_ts_lst_file}" -ts ${_ts_file}
+            ARGS ${_lupdate_options} -target-language ${_ts_lang} "@${_ts_lst_file}" -ts ${_ts_file}
             DEPENDS ${_my_sources} ${_ts_lst_file} VERBATIM)
     endforeach()
     myqt5_add_translation(${_qm_files} ${_my_tsfiles})
@@ -69,7 +76,10 @@ function(myQT5_ADD_TRANSLATION _qm_files)
     set(${_qm_files} ${${_qm_files}} PARENT_SCOPE)
 endfunction()
 
-FILE (GLOB TRANSLATIONS_FILES i18n/*.ts)
+set(TRANSLATIONS_FILES)
+foreach( _trad ${GEN_TRADUCTIONS} )
+    list( APPEND TRANSLATIONS_FILES "i18n/${_trad}.ts" )
+endforeach()
 
 OPTION (UPDATE_TRANSLATIONS "Update source translation i18n/*.ts")
 IF (UPDATE_TRANSLATIONS)
@@ -85,8 +95,8 @@ ENDIF (UPDATE_TRANSLATIONS)
 
 ADD_CUSTOM_TARGET (i18n_target DEPENDS ${QM_FILES} ${TRANSLATIONS_FILES} VERBATIM SOURCES ${TRANSLATIONS_FILES})
 
-set_property(TARGET i18n_target
+SET_PROPERTY(TARGET i18n_target
    APPEND PROPERTY AUTOGEN_TARGET_DEPENDS TrieDocs_automoc
  )
 
-set_source_files_properties(qrc_resources.cpp PROPERTIES OBJECT_DEPENDS "${QM_FILES}")
+SET_SOURCE_FILES_PROPERTIES( qrc_resources.cpp PROPERTIES OBJECT_DEPENDS "${QM_FILES}" )
