@@ -126,4 +126,5 @@ SET_PROPERTY(TARGET i18n_target
  )
 
 # Régénère les ressources si une traduction a été mise à jour
+SET_SOURCE_FILES_PROPERTIES( qrc_resources.cpp PROPERTIES GENERATED TRUE )
 SET_SOURCE_FILES_PROPERTIES( qrc_resources.cpp PROPERTIES OBJECT_DEPENDS "${QM_FILES}" )
