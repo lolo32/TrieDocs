@@ -88,3 +88,5 @@ ADD_CUSTOM_TARGET (i18n_target DEPENDS ${QM_FILES} ${TRANSLATIONS_FILES} VERBATI
 set_property(TARGET i18n_target
    APPEND PROPERTY AUTOGEN_TARGET_DEPENDS TrieDocs_automoc
  )
+
+set_source_files_properties(qrc_resources.cpp PROPERTIES OBJECT_DEPENDS "${QM_FILES}")
