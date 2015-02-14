@@ -8,6 +8,8 @@ ADD_DEFINITIONS( -DQT_NO_CAST_TO_ASCII )
 ADD_DEFINITIONS( -DTRIEDOCS_VERSION=${TrieDocs_VERSION_MAJOR}.${TrieDocs_VERSION_MINOR}.${TrieDocs_VERSION_PATCH} )
 ADD_DEFINITIONS( -DTRIEDOCS_VERSION_STR="${TrieDocs_VERSION_MAJOR}.${TrieDocs_VERSION_MINOR}.${TrieDocs_VERSION_PATCH}" )
 
+# Le fichier miniz inclu n’est que l’en-tête
+ADD_DEFINITIONS( -DMINIZ_HEADER_FILE_ONLY )
 
 # Find includes in corresponding build directories
 SET( CMAKE_INCLUDE_CURRENT_DIR ON )
@@ -33,43 +35,48 @@ FILE(GLOB TrieDocs_FENETRES  *.ui  )
 FILE(GLOB TrieDocs_TRADS     ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm} )
 
 # Répertoire des librairies
-INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libs/sqlite3 )
-INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libs/miniz )
+INCLUDE_DIRECTORIES( $ENV{sqlite3_root} )
+INCLUDE_DIRECTORIES( $ENV{miniz_root}   )
 
 SET( APPS "\${CMAKE_INSTALL_PREFIX}/bin/TrieDocs")
 IF( APPLE )
-  INCLUDE(cmake/MacOS.cmake)
+    INCLUDE(cmake/MacOS.cmake)
 ENDIF( APPLE )
 IF( WIN32 )
-  INCLUDE(cmake/Windows.cmake)
+    INCLUDE(cmake/Windows.cmake)
 ENDIF( WIN32 )
 
 # Executable
 ADD_EXECUTABLE( TrieDocs WIN32 MACOSX_BUNDLE ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_RESOURCES} ${TrieDocs_ICONE} ${TrieDocs_FENETRES} )
 TARGET_LINK_LIBRARIES(TrieDocs
-  Qt5::Core
-  Qt5::Widgets
-  myminiz mysqlite3
+    Qt5::Core
+    Qt5::Widgets
+    miniz sqlite3
+    polarssl lzhamdecomp lzhamcomp myscrypt
+    mupdf freetype jbig2dec jpeg openjpeg
   ${LIBS_PLATFORM}
 )
-set_property(TARGET TrieDocs PROPERTY POSITION_INDEPENDENT_CODE ON)
+SET_TARGET_PROPERTIES(TrieDocs
+    PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+)
 
 # Dépendance pour demander à CMake de générer les traductions avant de lancer automoc
 ADD_DEPENDENCIES (TrieDocs i18n_target)
 
 # Options d’installation
 INSTALL( TARGETS TrieDocs
-  BUNDLE DESTINATION . COMPONENT Runtime
-  RUNTIME DESTINATION bin COMPONENT Runtime
+    BUNDLE DESTINATION . COMPONENT Runtime
+    RUNTIME DESTINATION bin COMPONENT Runtime
 )
 IF( APPLE)
-  INSTALL(CODE "
-    file(GLOB_RECURSE QTPLUGINS
-      \"\${CMAKE_INSTALL_PREFIX}/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
-    include(BundleUtilities)
-    fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
-    " COMPONENT Runtime
-  )
+    INSTALL(CODE "
+        file(GLOB_RECURSE QTPLUGINS
+            \"\${CMAKE_INSTALL_PREFIX}/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
+        include(BundleUtilities)
+        fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
+        " COMPONENT Runtime
+    )
 ENDIF( APPLE )
 
 INCLUDE(cmake/CPack.cmake)
