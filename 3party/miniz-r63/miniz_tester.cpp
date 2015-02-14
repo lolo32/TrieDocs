@@ -23,7 +23,9 @@
 #include <assert.h>
 #include <memory.h>
 #include <stdarg.h>
+#ifndef __APPLE__
 #include <malloc.h>
+#endif
 #include <vector>
 #include <string>
 #include <limits.h>
@@ -48,14 +50,26 @@ typedef unsigned int uint;
 #else
    #include <unistd.h>
    #define Sleep(ms) usleep(ms*1000)
-   #define _aligned_malloc(size, alignment) memalign(alignment, size)
    #define _aligned_free free
-   #define fopen fopen64
-   #define _fseeki64 fseeko64
-   #define _ftelli64 ftello64
    #define _stricmp strcasecmp
-   #define FILE_STAT_STRUCT stat64
-   #define FILE_STAT stat64
+   #ifndef __APPLE__
+      #define _aligned_malloc(size, alignment) memalign(alignment, size)
+      #define fopen fopen64
+      #define _fseeki64 fseeko64
+      #define _ftelli64 ftello64
+      #define FILE_STAT_STRUCT stat64
+      #define FILE_STAT stat64
+   #else
+      #define _fseeki64 fseeko
+      #define _ftelli64 ftello
+      #define FILE_STAT_STRUCT stat
+      #define FILE_STAT stat
+      void *_aligned_malloc(size_t alignment, size_t bytes) {
+         void *result=0;
+         posix_memalign(&result, alignment, bytes);
+         return result;
+      }
+   #endif
 #endif
 
 #ifdef WIN32
