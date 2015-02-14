@@ -82,7 +82,7 @@ INCLUDE_DIRECTORIES( ${mupdf_root}/thirdparty/freetype/include     )
 # OpenJPEG
 INCLUDE_DIRECTORIES( ${mupdf_root}/thirdparty/openjpeg/libopenjpeg )
 
-ADD_LIBRARY( mymupdf STATIC
+ADD_LIBRARY( mupdf STATIC
   ${mupdf_fitz_SOURCES}
   ${mupdf_fitz_HEADERS}
   ${mupdf_pdf_SOURCES}
