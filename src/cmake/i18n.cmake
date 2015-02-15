@@ -110,11 +110,11 @@ ENDIF()
 
 OPTION (UPDATE_TRANSLATIONS "Update source translation i18n/*.ts")
 IF (UPDATE_TRANSLATIONS)
-  myQT5_CREATE_TRANSLATION(QM_FILES ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_FENETRES} ${TRANSLATIONS_FILES} OPTIONS -source-language fr )
-  # prevent the generated files from being deleted during make clean
-  set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
+    myQT5_CREATE_TRANSLATION(QM_FILES ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_FENETRES} ${TRANSLATIONS_FILES} OPTIONS -source-language fr )
+    # prevent the generated files from being deleted during make clean
+    set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
 ELSE (UPDATE_TRANSLATIONS)
-  myQT5_ADD_TRANSLATION(QM_FILES ${TRANSLATIONS_FILES})
+    myQT5_ADD_TRANSLATION(QM_FILES ${TRANSLATIONS_FILES})
 ENDIF (UPDATE_TRANSLATIONS)
 
 # Cible pour compiler les traductions
@@ -122,9 +122,5 @@ ADD_CUSTOM_TARGET (i18n_target DEPENDS ${QM_FILES} ${TRANSLATIONS_FILES} VERBATI
 
 # Ajout d’une règle pour recompiler les ressources si une traduction a été mise à jour
 SET_PROPERTY(TARGET i18n_target
-   APPEND PROPERTY AUTOGEN_TARGET_DEPENDS TrieDocs_automoc
- )
-
-# Régénère les ressources si une traduction a été mise à jour
-SET_SOURCE_FILES_PROPERTIES( qrc_resources.cpp PROPERTIES GENERATED TRUE )
-SET_SOURCE_FILES_PROPERTIES( qrc_resources.cpp PROPERTIES OBJECT_DEPENDS "${QM_FILES}" )
+    APPEND PROPERTY AUTOGEN_TARGET_DEPENDS TrieDocs_automoc
+)

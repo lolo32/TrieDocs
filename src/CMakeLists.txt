@@ -20,11 +20,15 @@ FILE(GLOB TrieDocs_SOURCES   *.cpp )
 FILE(GLOB TrieDocs_HEADERS   *.h   )
 FILE(GLOB TrieDocs_RESOURCES *.qrc )
 FILE(GLOB TrieDocs_FENETRES  *.ui  )
-FILE(GLOB TrieDocs_TRADS     ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm} )
+FILE(GLOB TrieDocs_TRADS     "${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm}" )
+SET(TrieDocs_commun_cpp      "${CMAKE_CURRENT_BINARY_DIR}/commun.cpp" )
 
 # Répertoire des librairies
 INCLUDE_DIRECTORIES( $ENV{sqlite3_root} )
 INCLUDE_DIRECTORIES( $ENV{miniz_root}   )
+
+# Librairies propres à la plateforme, le cas échéant
+SET(LIBS_PLATFORM)
 
 SET( APPS "\${CMAKE_INSTALL_PREFIX}/bin/TrieDocs")
 IF( APPLE )
@@ -37,8 +41,8 @@ ENDIF( WIN32 )
 # Génération du fichier commun.cpp, contenant divers objets globaux
 INCLUDE(cmake/GetGitRevisionDescription.cmake)
 GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
-CONFIGURE_FILE("commun.cpp.in" "commun.cpp" @ONLY)
-LIST(APPEND TrieDocs_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/commun.cpp")
+CONFIGURE_FILE("commun.cpp.in" ${TrieDocs_commun_cpp} @ONLY)
+LIST(APPEND TrieDocs_SOURCES ${TrieDocs_commun_cpp})
 
 # Executable
 ADD_EXECUTABLE( TrieDocs WIN32 MACOSX_BUNDLE ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_RESOURCES} ${TrieDocs_ICONE} ${TrieDocs_FENETRES} )
@@ -60,23 +64,24 @@ ADD_DEPENDENCIES (TrieDocs i18n_target)
 
 # Options d’installation
 INSTALL( TARGETS TrieDocs
-    BUNDLE DESTINATION . COMPONENT Runtime
+    BUNDLE  DESTINATION .   COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime
 )
-IF( APPLE)
-    INSTALL(CODE "
-        file(GLOB_RECURSE QTPLUGINS
-            \"\${CMAKE_INSTALL_PREFIX}/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
-        include(BundleUtilities)
-        fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
-        " COMPONENT Runtime
-    )
-ENDIF( APPLE )
+# Copie les dépendances libqt* dans les bons dossiers
+INSTALL(CODE "
+    file(GLOB_RECURSE QT_PLUGINS
+        \"\${CMAKE_INSTALL_PREFIX}/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
+    set(PLUGINS_DIRS \"\")          # Répertoire devant contenir les plugins ci-dessus
+    include(BundleUtilities)
+    fixup_bundle(\"${APPS}\" \"\${QT_PLUGINS}\" \"${PLUGINS_DIRS}\")
+    " COMPONENT Runtime
+)
 
 INCLUDE(cmake/CPack.cmake)
 
-FILE (GLOB FILES_moc_clean ${CMAKE_CURRENT_BINARY_DIR}/moc_*.cpp )
-FILE (GLOB FILES_ui_clean  ${CMAKE_CURRENT_BINARY_DIR}/ui_*.h )
+# Règles pour forcer à supprimer les fichiers générés durant la compilation (moc, rcc, etc.)
+FILE (GLOB FILES_moc_clean "${CMAKE_CURRENT_BINARY_DIR}/moc_*.cpp" )
+FILE (GLOB FILES_ui_clean  "${CMAKE_CURRENT_BINARY_DIR}/ui_*.h" )
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${FILES_moc_clean};${FILES_ui_clean}" )
 
 # Génération des traductions
