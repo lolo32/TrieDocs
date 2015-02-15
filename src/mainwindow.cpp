@@ -1,15 +1,20 @@
+#include "commun.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#include "traduction.h"
 
 /**
  * @brief constructeur
  * @param parent[in]
  */
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+   QMainWindow(parent),
+   ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+   ui->setupUi(this);
+
+   traduction.rempli(ui->menu_Langue);
 }
 
 /**
@@ -17,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
  */
 MainWindow::~MainWindow()
 {
-    delete ui;
+   delete ui;
 }
 
 /**
@@ -25,7 +30,7 @@ MainWindow::~MainWindow()
  */
 void MainWindow::on_btnRechercher_clicked()
 {
-    // Clic sur le bouton rechercher
+   // Clic sur le bouton rechercher
 }
 
 /**
@@ -33,5 +38,5 @@ void MainWindow::on_btnRechercher_clicked()
  */
 void MainWindow::on_action_Quitter_triggered()
 {
-    QApplication::quit();
+   QApplication::quit();
 }

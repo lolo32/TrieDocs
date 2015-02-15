@@ -1,0 +1,14 @@
+#include "commun.h"
+
+#define STRINGIZE_(x) #x
+#define STRINGIZE(x) STRINGIZE_(x)
+
+// Révision de Git utilisé
+#define GIT_SHA1 "@GIT_SHA1@"
+const char g_GIT_SHA1[] = GIT_SHA1;
+
+// Version de l’application
+#define TRIEDOCS_VERSION @TrieDocs_VERSION_MAJOR@.@TrieDocs_VERSION_MINOR@.@TrieDocs_VERSION_PATCH@
+#define TRIEDOCS_VERSION_STR STRINGIZE(TRIEDOCS_VERSION)
+const char g_TRIEDOCS_VERSION_STR[] = TRIEDOCS_VERSION_STR;
+

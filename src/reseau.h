@@ -5,8 +5,8 @@
 class Reseau
 {
 public:
-    Reseau();
-    ~Reseau();
+   Reseau();
+   ~Reseau();
 };
 
 #endif // RESEAU_H

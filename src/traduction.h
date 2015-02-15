@@ -28,16 +28,22 @@ public:
     ~Traduction();
 
     struct langue {
-        QString nom;
         QString iso;
+        QString nom;
+        QString traducteurs;
     };
 
-    void rempli(QMenu *menu);
-    void rempli(QComboBox *combo);
-    bool set(unsigned int index);
-    bool set(QString iso);
+    void rempli(QMenu *);
+    void rempli(QComboBox *);
+    bool set(unsigned int);
+    bool set(QString);
+
+    QString getTranslatorsName();
+    QString getLangName();
 
     void retranslateUi(QEvent *, WidgetTraduit *);
+
+    int getMoisAnglais(const QString&) const;
 
 protected slots:
     void slotLangueChangee(QAction *action);
@@ -47,7 +53,7 @@ protected:
 
     void initialise();
     static bool trieLangues(const struct langue&, const struct langue&);
-    QString nomLangue(const QString&);
+    struct langue nomLangue(const QString&, const QString&);
 
     QString               p_qszLangActuelle;
     QList<struct langue>  p_Langues;

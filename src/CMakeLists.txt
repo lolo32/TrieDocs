@@ -1,16 +1,4 @@
 
-# Désactive l’autocast QString depuis/vers char*
-# Permet de vérifier que les convertion Latin/Utf8 sont bien respecté, car elles doivent être explicites
-ADD_DEFINITIONS( -DQT_NO_CAST_FROM_ASCII )
-ADD_DEFINITIONS( -DQT_NO_CAST_TO_ASCII )
-
-# Définit la version de l’application
-ADD_DEFINITIONS( -DTRIEDOCS_VERSION=${TrieDocs_VERSION_MAJOR}.${TrieDocs_VERSION_MINOR}.${TrieDocs_VERSION_PATCH} )
-ADD_DEFINITIONS( -DTRIEDOCS_VERSION_STR="${TrieDocs_VERSION_MAJOR}.${TrieDocs_VERSION_MINOR}.${TrieDocs_VERSION_PATCH}" )
-
-# Le fichier miniz inclu n’est que l’en-tête
-ADD_DEFINITIONS( -DMINIZ_HEADER_FILE_ONLY )
-
 # Find includes in corresponding build directories
 SET( CMAKE_INCLUDE_CURRENT_DIR ON )
 # Instruct CMake to run moc automatically when needed.
@@ -46,14 +34,20 @@ IF( WIN32 )
     INCLUDE(cmake/Windows.cmake)
 ENDIF( WIN32 )
 
+# Génération du fichier commun.cpp, contenant divers objets globaux
+INCLUDE(cmake/GetGitRevisionDescription.cmake)
+GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
+CONFIGURE_FILE("commun.cpp.in" "commun.cpp" @ONLY)
+LIST(APPEND TrieDocs_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/commun.cpp")
+
 # Executable
 ADD_EXECUTABLE( TrieDocs WIN32 MACOSX_BUNDLE ${TrieDocs_SOURCES} ${TrieDocs_HEADERS} ${TrieDocs_RESOURCES} ${TrieDocs_ICONE} ${TrieDocs_FENETRES} )
 TARGET_LINK_LIBRARIES(TrieDocs
     Qt5::Core
     Qt5::Widgets
     miniz sqlite3
-    polarssl lzhamdecomp lzhamcomp myscrypt
-    mupdf freetype jbig2dec jpeg openjpeg
+#    polarssl lzhamdecomp lzhamcomp scrypt
+#    mupdf freetype jbig2dec jpeg openjpeg
   ${LIBS_PLATFORM}
 )
 SET_TARGET_PROPERTIES(TrieDocs
