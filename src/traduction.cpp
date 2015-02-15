@@ -226,7 +226,7 @@ bool Traduction::set(unsigned int index)
    QString iso = p_Langues[index].iso;
 
    if(   // Vérifie que l’index est valide et ne dépasse pas le nombre de langues
-         index >= p_Langues.count()
+         index >= (unsigned int)p_Langues.count()
 
          // Vérifie que l’on a déjà initialisé les traducteurs, retourne sinon
       || !p_bCharge
