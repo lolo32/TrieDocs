@@ -76,7 +76,7 @@ void DlgAbout::retranslateUi()
    QString strDateCompilation = QStringLiteral(__DATE__);
 
    unsigned int uiAnnee = strDateCompilation.mid(7).toUInt();
-   unsigned int uiMois = traduction.getMoisAnglais(strDateCompilation.mid(0, 3));
+   unsigned int uiMois = g_traduction.getMoisAnglais(strDateCompilation.mid(0, 3));
    unsigned int uiJour  = strDateCompilation.mid(4, 2).trimmed().toUInt();
 
    QDate dateCompilation(uiAnnee, uiMois, uiJour);
@@ -109,8 +109,8 @@ void DlgAbout::retranslateUi()
                              .arg(
                                 //: %1:"Language_Name" translation by: %2:"Translator(s) name"
                                 QString( tr("Traduction %1 par\302\240: %2") )
-                                      .arg( traduction.getLangName() )
-                                      .arg( traduction.getTranslatorsName() )
+                                      .arg( g_traduction.getLangName() )
+                                      .arg( g_traduction.getTranslatorsName() )
                                 )
                              .arg(
                                 //: The program is provided AS IS without ANY WARRANTY; WITHOUT
@@ -140,6 +140,6 @@ void DlgAbout::retranslateUi()
  */
 void DlgAbout::changeEvent(QEvent * event)
 {
-   traduction.retranslateUi(event, this);
+   g_traduction.retranslateUi(event, this);
    QDialog::changeEvent(event);
 }

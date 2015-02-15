@@ -61,6 +61,6 @@ protected:
     QList<QTranslator*>   p_traducteurs;
 };
 
-extern Traduction traduction;
+extern Traduction g_traduction;
 
 #endif // TRADUCTION_H

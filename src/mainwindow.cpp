@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
    ui->setupUi(this);
 
-   traduction.rempli(ui->menu_Langue);
+   g_traduction.rempli(ui->menu_Langue);
 }
 
 /**

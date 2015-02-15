@@ -101,7 +101,7 @@ DlgClient::DlgClient(QString qszServeur, QWidget *parent) :
    retranslateUi();
 
    // Remplit la liste du choix des langues
-   traduction.rempli(cbxLangues);
+   g_traduction.rempli(cbxLangues);
    p_initialise = true;
 
 //    QMetaObject::connectSlotsByName(this);
@@ -188,6 +188,6 @@ void DlgClient::on_btnBox_accepted()
  */
 void DlgClient::changeEvent(QEvent * event)
 {
-   traduction.retranslateUi(event, this);
+   g_traduction.retranslateUi(event, this);
    QDialog::changeEvent(event);
 }

@@ -9,7 +9,7 @@
 #include <QMenu>
 #include <QLocale>
 
-Traduction traduction;
+Traduction g_traduction;
 
 struct Traduction::langue Traduction::nomLangue(const QString &fichier, const QString &iso)
 {
