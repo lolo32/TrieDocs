@@ -89,3 +89,7 @@ ADD_LIBRARY( mupdf STATIC
   ${mupdf_pdf_HEADERS}
   ${mupdf_gen_HEADERS}
 )
+SET_TARGET_PROPERTIES(mupdf
+    PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+)

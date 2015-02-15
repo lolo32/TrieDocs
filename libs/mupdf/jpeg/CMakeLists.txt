@@ -34,6 +34,10 @@ SET(mupdf_jpeg_SOURCES
     ${mupdf_jpeg_root}/jutils.c
 )
 ADD_LIBRARY( jpeg STATIC ${mupdf_jpeg_SOURCES} )
+SET_TARGET_PROPERTIES(jpeg
+    PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+)
 
 INCLUDE_DIRECTORIES( ${mupdf_root}/scripts/jpeg                    )
 

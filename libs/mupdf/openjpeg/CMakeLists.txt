@@ -28,6 +28,10 @@ SET( mupdf_openjpeg_SOURCES
     ${mupdf_openjpeg_root}/tpix_manager.c
 )
 ADD_LIBRARY( openjpeg STATIC ${mupdf_openjpeg_SOURCES} )
+SET_TARGET_PROPERTIES(openjpeg
+    PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+)
 
 INCLUDE_DIRECTORIES( ${mupdf_root}/scripts/openjpeg )
 INCLUDE_DIRECTORIES( ${mupdf_openjpeg_root}         )

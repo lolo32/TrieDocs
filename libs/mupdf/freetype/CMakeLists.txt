@@ -26,6 +26,10 @@ SET( mupdf_ft2_SOURCES
     ${mupdf_ft2_root}/src/cid/type1cid.c
 )
 ADD_LIBRARY( freetype STATIC ${mupdf_ft2_SOURCES} )
+SET_TARGET_PROPERTIES(freetype
+    PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+)
 
 ADD_DEFINITIONS( -DFT2_BUILD_LIBRARY                     )
 ADD_DEFINITIONS( -DDARWIN_NO_CARBON                      )

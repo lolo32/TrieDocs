@@ -15,16 +15,24 @@ SET( scrypt_HEADERS
 )
 ADD_DEFINITIONS( -DWITH_POLARSSL )
 ADD_LIBRARY( scrypt STATIC ${scrypt_SOURCES} ${scrypt_HEADERS} )
+SET_TARGET_PROPERTIES(scrypt
+    PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+)
 
 INCLUDE_DIRECTORIES( ${scrypt_ROOT} )
 INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/3party/polarssl-git/include )
 
 ADD_EXECUTABLE( check_libscrypt
     EXCLUDE_FROM_ALL
-    ${myscrypt_ROOT}/main.c
-    ${myscrypt_ROOT}/crypto_scrypt-hexconvert.c
-    ${myscrypt_ROOT}/crypto_scrypt-hexconvert.h
+    ${scrypt_ROOT}/main.c
+    ${scrypt_ROOT}/crypto_scrypt-hexconvert.c
+    ${scrypt_ROOT}/crypto_scrypt-hexconvert.h
 )
 TARGET_LINK_LIBRARIES( check_libscrypt
     scrypt polarssl
+)
+SET_TARGET_PROPERTIES(check_libscrypt
+    PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
 )
