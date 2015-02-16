@@ -21,7 +21,7 @@ FILE(GLOB TrieDocs_HEADERS   *.h   )
 FILE(GLOB TrieDocs_RESOURCES *.qrc )
 FILE(GLOB TrieDocs_FENETRES  *.ui  )
 FILE(GLOB TrieDocs_TRADS     "${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm}" )
-SET(TrieDocs_commun_cpp      "${CMAKE_CURRENT_BINARY_DIR}/commun.cpp" )
+SET(TrieDocs_commun_cpp      "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/TrieDocs.dir/commun.cpp" )
 
 # Répertoire des librairies
 INCLUDE_DIRECTORIES( $ENV{sqlite3_root} )
