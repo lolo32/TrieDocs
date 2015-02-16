@@ -1,11 +1,11 @@
-SET( ENV{sqlite3_root} ${PROJECT_SOURCE_DIR}/3party/sqlite-3.8.8.2 )
+SET( ENV{sqlite3_ROOT} ${PROJECT_SOURCE_DIR}/3party/sqlite-3.8.8.2 )
 
 SET( sqlite3_SOURCES
-    $ENV{sqlite3_root}/sqlite/sqlite3.h
-    $ENV{sqlite3_root}/sqlite/sqlite3.c
+    $ENV{sqlite3_ROOT}/sqlite/sqlite3.h
+    $ENV{sqlite3_ROOT}/sqlite/sqlite3.c
 )
 
-INCLUDE_DIRECTORIES( $ENV{sqlite3_root} )
+INCLUDE_DIRECTORIES( $ENV{sqlite3_ROOT} )
 
 # Active le moteur FTS4
 ADD_DEFINITIONS( -DSQLITE_ENABLE_FTS4 )
