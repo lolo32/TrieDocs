@@ -10,5 +10,6 @@ const char g_GIT_SHA1[] = GIT_SHA1;
 // Version de l’application
 #define TRIEDOCS_VERSION @TrieDocs_VERSION_MAJOR@.@TrieDocs_VERSION_MINOR@.@TrieDocs_VERSION_PATCH@
 #define TRIEDOCS_VERSION_STR STRINGIZE(TRIEDOCS_VERSION)
+const unsigned int g_TRIEDOCS_VERSION = @TrieDocs_VERSION_MAJOR@ << 24 | @TrieDocs_VERSION_MINOR@ << 16 | @TrieDocs_VERSION_PATCH@;
 const char g_TRIEDOCS_VERSION_STR[] = TRIEDOCS_VERSION_STR;
 

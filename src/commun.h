@@ -14,6 +14,7 @@
 extern const char g_GIT_SHA1[];
 
 // Numéro de version du programme
+extern const unsigned int g_TRIEDOCS_VERSION;
 extern const char g_TRIEDOCS_VERSION_STR[];
 
 #endif // COMMUN_H
